@@ -1,0 +1,50 @@
+{
+  "name": "omega-inventory",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.15",
+    "@naisutech/react-tree": "^2.0.11",
+    "arwes": "^1.0.0-alpha.5",
+    "classnames": "^2.3.1",
+    "react": "^17.0.2",
+    "react-checkbox-tree": "^1.7.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "react-treelist": "^1.2.0",
+    "react-ui-tree": "^4.0.0",
+    "react-virtualized": "^9.22.3",
+    "react-virtualized-tree": "^3.4.1",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "react-folder-tree": "^5.0.3"
+  }
+}
