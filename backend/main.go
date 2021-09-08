@@ -10,8 +10,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-
-
 func init() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stdout})
 	err := orm.RegisterDriver("postgres", orm.DRPostgres)
@@ -24,7 +22,6 @@ func init() {
 	}
 
 }
-
 
 func main() {
 
@@ -42,12 +39,11 @@ func main() {
 	}
 	locCat := StorageLocationCategory{Name: "#"}
 	loc := StorageLocation{
-		Name:       "root",
-		Category:   &locCat,
+		Name:     "root",
+		Category: &locCat,
 	}
 	locCat2 := StorageLocationCategory{Name: "test", Parent: &locCat}
 	part := Part{Name: "test", Category: &cat, Unit: &unit, StorageLocation: &loc}
-
 
 	_, err = o.Insert(&locCat)
 	if err != nil {
