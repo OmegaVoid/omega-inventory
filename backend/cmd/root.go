@@ -16,7 +16,6 @@ import (
 )
 
 var cfgFile string
-var dbCon string
 
 // rootCmd represents the base command when called without any subcommands TODO
 var rootCmd = &cobra.Command{
