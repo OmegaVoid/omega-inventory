@@ -12,6 +12,7 @@
     "react": "^17.0.2",
     "react-checkbox-tree": "^1.7.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "react-treelist": "^1.2.0",
     "react-ui-tree": "^4.0.0",

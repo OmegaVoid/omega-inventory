@@ -1,32 +1,29 @@
-import logo from './logo.svg';
+import Sidebar from "./components/Sidebar";
 
-import {ThemeProvider, createTheme, Arwes, Button, Image, Frame, Project, Words, Content, Heading} from 'arwes';
+import {Arwes, Col, createTheme, Frame, Row, ThemeProvider} from 'arwes';
 
 import './App.css';
 
-import Tree, {FilteringContainer, renderers} from 'react-virtualized-tree'
-
-
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {
-  faFolder,
-  faFolderOpen,
-  faFile,
-  faFolderPlus,
-  faFolderMinus,
-  faPlusSquare,
-  faMinusSquare,
+  faArrowAltCircleLeft,
   faEdit,
+  faFile,
+  faFolder,
+  faFolderMinus,
+  faFolderOpen,
+  faFolderPlus,
+  faHome,
+  faList,
+  faMinusSquare,
+  faPlusSquare,
+  faSignOutAlt,
   faSync
 } from '@fortawesome/free-solid-svg-icons'
 import React, {Component} from "react";
-import tree from './tree';
 
-import cx from 'classnames';
-
-const {Expandable} = renderers;
-library.add(faFolder, faFolderOpen, faFile, faFolderPlus, faFolderMinus, faPlusSquare, faMinusSquare, faEdit, faSync)
+library.add(faFolder, faFolderOpen, faFile, faFolderPlus, faFolderMinus,
+    faPlusSquare, faMinusSquare, faEdit, faSync, faHome, faList, faSignOutAlt, faArrowAltCircleLeft)
 
 
 let ids = {};
@@ -42,7 +39,7 @@ const getUniqueId = () => {
   return candidateId;
 };
 const constructTree = (maxDeepness, maxNumberOfChildren, minNumOfNodes, deepness = 1) => {
-  return new Array(minNumOfNodes).fill(deepness).map((si, i) => {
+  return new Array(minNumOfNodes).fill(deepness).map(() => {
     const id = getUniqueId();
     const numberOfChildren = deepness === maxDeepness ? 0 : Math.round(Math.random() * maxNumberOfChildren);
 
@@ -80,15 +77,26 @@ class App extends Component {
         <ThemeProvider theme={createTheme()}>
           <Arwes>
 
-            <Tree nodes={this.state.nodes} onChange={this.handleChange}>
-              {({style, node, ...rest}) => (
-                  <div style={style}>
-                    <Expandable node={node}  {...rest}>
-                      <Button>{node.name}</Button>
-                    </Expandable>
-                  </div>
-              )}
-            </Tree>
+            <Row noMargin noGutter
+                 style={{display: "flex", height: "100%", justifyItems: "flex-start", flexBasis: "max-content"}}>
+              <Sidebar/>
+              <Col s={11} style={{margin: 0}}>
+                <Frame style={{height: "100%", width: "100%", margin: 0}}>
+
+                </Frame>
+              </Col>
+            </Row>
+
+
+            {/*<Tree nodes={this.state.nodes} onChange={this.handleChange}>*/}
+            {/*  {({style, node, ...rest}) => (*/}
+            {/*      <div style={style}>*/}
+            {/*        <Expandable node={node}  {...rest}>*/}
+            {/*          <Button>{node.name}</Button>*/}
+            {/*        </Expandable>*/}
+            {/*      </div>*/}
+            {/*  )}*/}
+            {/*</Tree>*/}
           </Arwes>
         </ThemeProvider>
     )
