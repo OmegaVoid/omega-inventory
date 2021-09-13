@@ -1484,12 +1484,12 @@ input FootprintCategoryInput {
 
 type FootprintAttachment implements Node {
 	id:                 ID!
-	file: 				Upload
+	file:                Upload
 }
 
 input FootprintAttachmentInput {
-	isImage:			Boolean!
-	file: 				Upload
+	isImage:            Boolean!
+	file:                Upload
 }`, BuiltIn: false},
 	{Name: "api/part.graphqls", Input: `type Part implements Node {
 	id:                 ID!
@@ -1530,13 +1530,13 @@ input PartInput {
 
 type PartAttachment implements Node {
 	id:                 ID!
-	isImage:			Boolean!
-	file: 				Upload
+	isImage:            Boolean!
+	file:                Upload
 }
 
 input PartAttachmentInput {
-	isImage:			Boolean!
-	file: 				Upload
+	isImage:            Boolean!
+	file:                Upload
 }
 
 type PartCategory implements Node {
