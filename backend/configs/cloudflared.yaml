@@ -1,0 +1,3 @@
+tunnel: fbfd84e5-3870-4172-8550-1844de588b1b
+url: http://localhost:8080
+credentials-file: /home/omegarogue/.cloudflared/fbfd84e5-3870-4172-8550-1844de588b1b.json
