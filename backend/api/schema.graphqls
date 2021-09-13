@@ -30,16 +30,39 @@ enum ValueType {
 type Query {
 	parts(category: PartCategoryInput): [Part!]
 	part(id: ID!): Part!
+
 	partCategories(category: PartCategoryInput): [PartCategory!]
 	partCategory(id: ID!): PartCategory!
+
 	storageLocations(category: StorageLocationCategoryInput): [StorageLocation!]
 	storageLocation(id: ID!): StorageLocation!
+
 	storageLocationCategories(category: StorageLocationCategoryInput): [StorageLocationCategory!]
 	storageLocationCategory(id: ID!): StorageLocationCategory!
+
 	partMeasurementUnits: [PartMeasurementUnit!]
 	partMeasurementUnit(id: ID!): PartMeasurementUnit!
+
 	siPrefixes: [SiPrefix!]
 	siPrefix(id: ID!): SiPrefix!
+
+	units: [Unit!]
+	unit(id: ID!): Unit!
+
+	partAttachments: [PartAttachment!]
+	partAttachment(id: ID!): PartAttachment!
+
+	footprints: [Footprint!]
+	footprint(id: ID!): Footprint!
+
+	footprintCategories: [FootprintCategory!]
+	footprintCategory(id: ID!): FootprintCategory!
+
+	footprintAttachments: [FootprintAttachment!]
+	footprintAttachment(id: ID!): FootprintAttachment!
+
+	partParameters: [PartParameter!]
+	partParameter(id: ID!): PartParameter!
 }
 
 type Mutation {

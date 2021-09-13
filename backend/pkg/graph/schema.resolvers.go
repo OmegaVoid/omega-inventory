@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/OmegaVoid/omega-inventory/internal/generated"
 	"github.com/OmegaVoid/omega-inventory/pkg/middlewares"
@@ -302,7 +301,7 @@ func (r *mutationResolver) CreateFootprintCategory(
 	ctx context.Context,
 	input model.FootprintCategoryInput,
 ) (*model.FootprintCategory, error) {
-	panic(fmt.Errorf("not implemented"))
+	return nil, errs.New("not implemented")
 }
 
 func (r *mutationResolver) UpdateFootprintCategory(
@@ -310,18 +309,18 @@ func (r *mutationResolver) UpdateFootprintCategory(
 	id string,
 	input model.FootprintCategoryInput,
 ) (*model.FootprintCategory, error) {
-	panic(fmt.Errorf("not implemented"))
+	return nil, errs.New("not implemented")
 }
 
 func (r *mutationResolver) DeleteFootprintCategory(ctx context.Context, id string) (*model.FootprintCategory, error) {
-	panic(fmt.Errorf("not implemented"))
+	return nil, errs.New("not implemented")
 }
 
 func (r *mutationResolver) CreateFootprintAttachment(
 	ctx context.Context,
 	input model.FootprintAttachmentInput,
 ) (*model.FootprintAttachment, error) {
-	panic(fmt.Errorf("not implemented"))
+	return nil, errs.New("not implemented")
 }
 
 func (r *mutationResolver) UpdateFootprintAttachment(
@@ -329,21 +328,21 @@ func (r *mutationResolver) UpdateFootprintAttachment(
 	id string,
 	input model.FootprintAttachmentInput,
 ) (*model.FootprintAttachment, error) {
-	panic(fmt.Errorf("not implemented"))
+	return nil, errs.New("not implemented")
 }
 
 func (r *mutationResolver) DeleteFootprintAttachment(ctx context.Context, id string) (
 	*model.FootprintAttachment,
 	error,
 ) {
-	panic(fmt.Errorf("not implemented"))
+	return nil, errs.New("not implemented")
 }
 
 func (r *mutationResolver) CreatePartParameter(
 	ctx context.Context,
 	input model.PartParameterInput,
 ) (*model.PartParameter, error) {
-	panic(fmt.Errorf("not implemented"))
+	return nil, errs.New("not implemented")
 }
 
 func (r *mutationResolver) UpdatePartParameter(
@@ -351,11 +350,11 @@ func (r *mutationResolver) UpdatePartParameter(
 	id string,
 	input model.PartParameterInput,
 ) (*model.PartParameter, error) {
-	panic(fmt.Errorf("not implemented"))
+	return nil, errs.New("not implemented")
 }
 
 func (r *mutationResolver) DeletePartParameter(ctx context.Context, id string) (*model.PartParameter, error) {
-	panic(fmt.Errorf("not implemented"))
+	return nil, errs.New("not implemented")
 }
 
 func (r *queryResolver) Parts(ctx context.Context, category *model.PartCategoryInput) ([]*model.Part, error) {
@@ -440,6 +439,54 @@ func (r *queryResolver) SiPrefixes(ctx context.Context) ([]*model.SiPrefix, erro
 }
 
 func (r *queryResolver) SiPrefix(ctx context.Context, id string) (*model.SiPrefix, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) Units(ctx context.Context) ([]*model.Unit, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) Unit(ctx context.Context, id string) (*model.Unit, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) PartAttachments(ctx context.Context) ([]*model.PartAttachment, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) PartAttachment(ctx context.Context, id string) (*model.PartAttachment, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) Footprints(ctx context.Context) ([]*model.Footprint, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) Footprint(ctx context.Context, id string) (*model.Footprint, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) FootprintCategories(ctx context.Context) ([]*model.FootprintCategory, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) FootprintCategory(ctx context.Context, id string) (*model.FootprintCategory, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) FootprintAttachments(ctx context.Context) ([]*model.FootprintAttachment, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) FootprintAttachment(ctx context.Context, id string) (*model.FootprintAttachment, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) PartParameters(ctx context.Context) ([]*model.PartParameter, error) {
+	return nil, errs.New("not implemented")
+}
+
+func (r *queryResolver) PartParameter(ctx context.Context, id string) (*model.PartParameter, error) {
 	return nil, errs.New("not implemented")
 }
 
