@@ -1,0 +1,29 @@
+type StorageLocation implements Node {
+	id:       ID!
+	name:     String!
+	# Image:  StorageLocationImage!
+	category: StorageLocationCategory!
+	parts:    [Part!]
+}
+
+input StorageLocationInput  {
+	name:     String!
+	# Image:  StorageLocationImage!
+	category: ID!
+}
+
+type StorageLocationCategory implements Node {
+	id:               ID!
+	name:             String!
+	description:      String
+	storageLocations: [StorageLocation]
+	root: Boolean
+	parent: StorageLocationCategory
+	children: [StorageLocationCategory]
+}
+
+input StorageLocationCategoryInput {
+	parent:      ID
+	name:        String!
+	description: String
+}

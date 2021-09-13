@@ -1,0 +1,110 @@
+type Part implements Node {
+	id:                 ID!
+	name:               String!
+	category:           PartCategory!
+	description:        String
+	footprint:          Footprint!
+	unit:               PartMeasurementUnit !
+	storageLocation:    StorageLocation!
+	#Manufacturers:     [PartManufacturer!]!
+	#Distributors:      [PartDistributor!]!
+	attachments:        [PartAttachment]
+	comment:            String
+	stockLevel:         Float!
+	minStockLevel:      Float!
+	#ProjectParts:      [ProjectPart!]!
+	parameters:         [PartParameter]
+	internalPartNumber: String!
+}
+
+input PartInput {
+	name:               String!
+	category:           ID!
+	description:        String
+	footprint:          ID!
+	unit:               ID!
+	storageLocation:    ID!
+	#Manufacturers:     [PartManufacturer!]!
+	#Distributors:      [PartDistributor!]!
+	attachments:        [ID]
+	comment:            String
+	stockLevel:         Float!
+	minStockLevel:      Float!
+	#ProjectParts:      [ProjectPart!]!
+	parameters:         [ID]
+	internalPartNumber: String!
+}
+
+type PartAttachment implements Node {
+	id:                 ID!
+	isImage:            Boolean!
+	file:                Upload
+}
+
+input PartAttachmentInput {
+	isImage:            Boolean!
+	file:                Upload
+}
+
+type PartCategory implements Node {
+	id:          ID!
+	name:        String!
+	description: String
+	parts:       [PartCategory]
+	children: [PartCategory]
+	parent: ID
+	root: Boolean
+}
+
+input PartCategoryInput {
+	name:        String!
+	description: String
+	parent:      ID
+}
+
+type PartMeasurementUnit implements Node {
+	id:        ID!
+	name:      String!
+	shortName: String!
+	default:   Boolean!
+}
+
+input PartMeasurementUnitInput {
+	name:      String!
+	shortName: String!
+}
+
+type PartParameter implements Node{
+	id:   ID!
+	part: Part!
+	name: String!
+	description: String
+	unit: Unit!
+	value: Float
+	normalizedValue: Float
+	maxValue: Float
+	normalizedMaxValue: Float
+	minValue: Float
+	normalizedMinValue: Float
+	stringValue: String
+	valueType: ValueType!
+	siPrefix: SiPrefix!
+	minSiPrefix: SiPrefix!
+	maxSiPrefix: SiPrefix!
+
+}
+
+input PartParameterInput {
+	part: ID!
+	name: String!
+	description: String
+	unit: ID!
+	value: Float
+	maxValue: Float
+	minValue: Float
+	stringValue: String
+	valueType: ValueType!
+	siPrefix: ID!
+	minSiPrefix: ID!
+	maxSiPrefix: ID!
+}

@@ -1,0 +1,28 @@
+type Unit implements Node{
+	id:   ID!
+	name: String!
+	symbol: String!
+	prefixes: [SiPrefix!]!
+}
+
+input UnitInput {
+	name: String!
+	symbol: String!
+	prefixes: [ID!]!
+}
+
+type SiPrefix implements Node{
+	id:   ID!
+	symbol: String!
+	prefix: String!
+	exponent: Int!
+	base: Int!
+}
+
+input SiPrefixInput {
+	symbol: String!
+	prefix: String!
+	default: ID!
+	exponent: Int!
+	base: Int!
+}

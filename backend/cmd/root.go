@@ -2,11 +2,16 @@ package cmd
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/OmegaVoid/omega-inventory/internal/generated"
+	"github.com/OmegaVoid/omega-inventory/internal/gql_server"
+	"github.com/OmegaVoid/omega-inventory/pkg/graph"
 	"github.com/spf13/cobra"
 
-	"github.com/OmegaVoid/omega-inventory/pkg/model"
 	"github.com/spf13/viper"
 
 	"github.com/beego/beego/v2/client/orm"
@@ -30,54 +35,16 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		o := orm.NewOrm()
 
-		err := orm.RunSyncdb("default", true, true)
-		if err != nil {
-			log.Fatal().Err(err).Msg("sync database")
-		}
+		r := gql_server.GinServer(log.Logger)
 
-		cat := model.PartCategory{Name: "#"}
-		unit := model.PartMeasurementUnit{
-			Name:      "Quantity",
-			ShortName: "qty",
-		}
-		locCat := model.StorageLocationCategory{Name: "#"}
-		loc := model.StorageLocation{
-			Name:     "root",
-			Category: &locCat,
-		}
-		locCat2 := model.StorageLocationCategory{Name: "test", Parent: &locCat}
-		part := model.Part{Name: "test", Category: &cat, Unit: &unit, StorageLocation: &loc}
+		srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
 
-		_, err = o.Insert(&locCat)
-		if err != nil {
-			log.Fatal().Err(err).Msg("insert locCat")
-		}
+		http.Handle("/", playground.Handler("GraphQL playground", "/query"))
+		http.Handle("/query", srv)
+		log.Info().Msgf("connect to http://localhost:%v/ for GraphQL playground", viper.GetInt("graphql_port"))
 
-		_, err = o.Insert(&locCat2)
-		if err != nil {
-			log.Fatal().Err(err).Msg("insert locCat2")
-		}
-
-		_, err = o.Insert(&loc)
-		if err != nil {
-			log.Fatal().Err(err).Msg("insert loc")
-		}
-		_, err = o.Insert(&cat)
-		if err != nil {
-			log.Fatal().Err(err).Msg("insert cat")
-		}
-		_, err = o.Insert(&unit)
-		if err != nil {
-			log.Fatal().Err(err).Msg("insert unit")
-		}
-		_, err = o.Insert(&part)
-		if err != nil {
-			log.Fatal().Err(err).Msg("insert part")
-		}
-
-		fmt.Println(locCat.Children)
+		log.Err(r.Run(fmt.Sprint(":", viper.GetInt("graphql_port")))).Msg("running GraphQL Playground")
 	},
 }
 
@@ -103,8 +70,9 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.omega-inventory.yaml)")
-	rootCmd.PersistentFlags().StringP("database", "db", "", "database connection string")
-	rootCmd.PersistentFlags().StringP("database_type", "db_type", "", "database type, supported value:\npostgres")
+	rootCmd.PersistentFlags().IntP("graphql_port", "", 0, "Port to run GraphQL server on")
+	rootCmd.PersistentFlags().StringP("database", "", "", "database connection string")
+	rootCmd.PersistentFlags().StringP("database_type", "", "", "database type, supported value:\npostgres")
 	err = viper.BindPFlag("database", rootCmd.PersistentFlags().Lookup("database"))
 	if err != nil {
 		log.Fatal().Err(err).Msg("bind config value database to flag")
@@ -113,12 +81,17 @@ func init() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("bind config value database_type to flag")
 	}
+	err = viper.BindPFlag("graphql_port", rootCmd.PersistentFlags().Lookup("graphql_port"))
+	if err != nil {
+		log.Fatal().Err(err).Msg("bind config value graphql_port to flag")
+	}
 	viper.SetDefault("database", "user=gorm dbname=gorm password=gorm sslmode=disable")
 	viper.SetDefault("database_type", "postgres")
+	viper.SetDefault("graphql_port", 8080)
+	viper.AutomaticEnv()
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	err = orm.RegisterDataBase("default", viper.GetString("database_type"), viper.GetString("database"))
 	if err != nil {

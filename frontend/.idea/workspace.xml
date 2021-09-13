@@ -5,15 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da9489a7-261c-4538-8a77-8fa95fe395da" name="Changes" comment=":boom:(frontend) Restart frontend in Next.js">
-      <change afterPath="$PROJECT_DIR$/components/sounds.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Sidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/api/footprint.graphqls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/api/part.graphqls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/api/schema.graphqls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/api/storageLocation.graphqls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/api/unit.graphqls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/configs/gqlgen.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/internal/generated/generated.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/internal/gql_server/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/pkg/bun_gql/bun.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/pkg/bun_gql/bun.gotpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/pkg/graph/resolver.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/pkg/graph/schema.resolvers.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/pkg/middlewares/context.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/pkg/model/models_gen.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/pkg/plugins/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/pkg/router/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/cmd/root.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/pkg/model/model.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +59,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="settings.editor.selected.configurable" value="zielu.gittoolbox.app.config.v2" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -109,6 +120,7 @@
       <option name="presentableId" value="Default" />
       <updated>1631458139545</updated>
       <workItem from="1631458140730" duration="2647000" />
+      <workItem from="1631549641764" duration="21000" />
     </task>
     <task id="LOCAL-00001" summary=":boom:(frontend) Restart frontend in Next.js">
       <created>1631458238307</created>
@@ -140,6 +152,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value=":boom:(frontend) Restart frontend in Next.js" />

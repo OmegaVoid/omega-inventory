@@ -1,0 +1,42 @@
+type Footprint implements Node {
+	id:                 ID!
+	name:               String!
+	category:           FootprintCategory!
+	description:        String
+	attachments:        [FootprintAttachment]
+	image: FootprintAttachment
+}
+
+input FootprintInput {
+	name:               String!
+	description:        String
+	image: ID
+	category: ID!
+}
+
+
+type FootprintCategory implements Node {
+	id:          ID!
+	name:        String!
+	description: String
+	parent:      FootprintCategory
+	children:    [FootprintCategory]
+	footprints:       [Footprint]
+}
+
+input FootprintCategoryInput {
+	name:        String!
+	description: String
+	parent:      ID
+}
+
+
+type FootprintAttachment implements Node {
+	id:                 ID!
+	file:                Upload
+}
+
+input FootprintAttachmentInput {
+	isImage:            Boolean!
+	file:                Upload
+}

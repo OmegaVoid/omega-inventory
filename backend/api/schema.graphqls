@@ -1,0 +1,97 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+directive @goModel(model: String, models: [String!]) on OBJECT
+	| INPUT_OBJECT
+	| SCALAR
+	| ENUM
+	| INTERFACE
+	| UNION
+
+directive @goField(
+	forceResolver: Boolean
+	name: String
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+scalar Upload
+
+interface Node {
+	id:   ID!
+}
+
+
+enum ValueType {
+	STRING
+	NUMBER
+}
+
+
+type Query {
+	parts(category: PartCategoryInput): [Part!]
+	part(id: ID!): Part!
+	partCategories(category: PartCategoryInput): [PartCategory!]
+	partCategory(id: ID!): PartCategory!
+	storageLocations(category: StorageLocationCategoryInput): [StorageLocation!]
+	storageLocation(id: ID!): StorageLocation!
+	storageLocationCategories(category: StorageLocationCategoryInput): [StorageLocationCategory!]
+	storageLocationCategory(id: ID!): StorageLocationCategory!
+	partMeasurementUnits: [PartMeasurementUnit!]
+	partMeasurementUnit(id: ID!): PartMeasurementUnit!
+	siPrefixes: [SiPrefix!]
+	siPrefix(id: ID!): SiPrefix!
+}
+
+type Mutation {
+	createPartMeasurementUnit(input: PartMeasurementUnitInput!):          PartMeasurementUnit!
+	updatePartMeasurementUnit(id: ID!, input: PartMeasurementUnitInput!): PartMeasurementUnit!
+	deletePartMeasurementUnit(id: ID!):                                 PartMeasurementUnit!
+
+	createPartCategory(input: PartCategoryInput!):          PartCategory!
+	updatePartCategory(id: ID!, input: PartCategoryInput!): PartCategory!
+	deletePartCategory(id: ID!):                          PartCategory!
+
+	createStorageLocationCategory(input: StorageLocationCategoryInput!):          StorageLocationCategory!
+	updateStorageLocationCategory(id: ID!, input: StorageLocationCategoryInput!): StorageLocationCategory!
+	deleteStorageLocationCategory(id: ID!):                                     StorageLocationCategory!
+
+	createStorageLocation(input: StorageLocationInput!):          StorageLocation!
+	updateStorageLocation(id: ID!, input: StorageLocationInput!): StorageLocation!
+	deleteStorageLocation(id: ID!):                             StorageLocation!
+
+	createPart(input: PartInput!):          Part!
+	updatePart(id: ID!, input: PartInput!): Part!
+	deletePart(id: ID!):                  Part!
+
+	createSiPrefix(input: SiPrefixInput!):          SiPrefix!
+	updateSiPrefix(id: ID!, input: SiPrefixInput!): SiPrefix!
+	deleteSiPrefix(id: ID!):                  SiPrefix!
+
+	createUnit(input: UnitInput!):          Unit!
+	updateUnit(id: ID!, input: UnitInput!): Unit!
+	deleteUnit(id: ID!):                  Unit!
+
+	createPartAttachment(input: PartAttachmentInput!):          PartAttachment!
+	updatePartAttachment(id: ID!, input: PartAttachmentInput!): PartAttachment!
+	deletePartAttachment(id: ID!):                  PartAttachment!
+
+	createFootprint(input: FootprintInput!):          Footprint!
+	updateFootprint(id: ID!, input: FootprintInput!): Footprint!
+	deleteFootprint(id: ID!):                  Footprint!
+
+	createFootprintCategory(input: FootprintCategoryInput!):          FootprintCategory!
+	updateFootprintCategory(id: ID!, input: FootprintCategoryInput!): FootprintCategory!
+	deleteFootprintCategory(id: ID!):                  FootprintCategory!
+
+	createFootprintAttachment(input: FootprintAttachmentInput!):          FootprintAttachment!
+	updateFootprintAttachment(id: ID!, input: FootprintAttachmentInput!): FootprintAttachment!
+	deleteFootprintAttachment(id: ID!):                  FootprintAttachment!
+
+
+	createPartParameter(input: PartParameterInput!):          PartParameter!
+	updatePartParameter(id: ID!, input: PartParameterInput!): PartParameter!
+	deletePartParameter(id: ID!):                  PartParameter!
+
+
+
+}
