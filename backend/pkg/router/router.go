@@ -6,7 +6,6 @@ import (
 
 	"github.com/OmegaVoid/omega-inventory/internal/generated"
 	"github.com/OmegaVoid/omega-inventory/pkg/graph"
-	"github.com/OmegaVoid/omega-inventory/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4/log/zerologadapter"
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -28,10 +27,6 @@ func GraphqlHandler() gin.HandlerFunc {
 	connConf := dbpool.Config().ConnConfig
 	connConf.Logger = logger
 
-	node, err := utils.GetNewSnowflakeNode()
-	if err != nil {
-		log.Err(err).Msg("new snowflake node")
-	}
 	h := handler.NewDefaultServer(
 		generated.NewExecutableSchema(
 			generated.Config{
