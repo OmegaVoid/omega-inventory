@@ -1,15 +1,25 @@
 type StorageLocation implements Node {
 	id:       ID!
 	name:     String!
-	# Image:  StorageLocationImage!
+	Image:  StorageLocationImage
 	category: StorageLocationCategory!
 	parts:    [Part!]
 }
 
 input StorageLocationInput  {
 	name:     String!
-	# Image:  StorageLocationImage!
+	Image:  StorageLocationImageInput
 	category: ID!
+}
+
+
+type StorageLocationImage implements Node {
+	id:   ID!
+	file: Upload!
+}
+
+input StorageLocationImageInput {
+	file: Upload!
 }
 
 type StorageLocationCategory implements Node {

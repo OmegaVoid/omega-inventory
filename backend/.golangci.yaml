@@ -30,6 +30,7 @@ run:
   # on Windows.
   skip-files:
     - ".*_enum\\.go$"
+    - "resolver.go$"
 
   # Allow multiple parallel golangci-lint instances running.
   # If false (default) - golangci-lint acquires file lock on start.

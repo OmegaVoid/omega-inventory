@@ -8,128 +8,77 @@ import (
 	"strconv"
 
 	"github.com/99designs/gqlgen/graphql"
+	"github.com/bwmarrin/snowflake"
 )
 
 type Node interface {
 	IsNode()
 }
 
-type Footprint struct {
-	ID          string                 `json:"id"`
-	Name        string                 `json:"name"`
-	Category    *FootprintCategory     `json:"category"`
-	Description *string                `json:"description"`
-	Attachments []*FootprintAttachment `json:"attachments"`
-	Image       *FootprintAttachment   `json:"image"`
-}
-
-func (Footprint) IsNode() {}
-
 type FootprintAttachment struct {
-	ID   string          `json:"id"`
-	File *graphql.Upload `json:"file"`
+	ID   snowflake.ID   `json:"id"`
+	File graphql.Upload `json:"file"`
 }
 
 func (FootprintAttachment) IsNode() {}
 
 type FootprintAttachmentInput struct {
-	IsImage bool            `json:"isImage"`
-	File    *graphql.Upload `json:"file"`
+	IsImage bool           `json:"isImage"`
+	File    graphql.Upload `json:"file"`
 }
-
-type FootprintCategory struct {
-	ID          string               `json:"id"`
-	Name        string               `json:"name"`
-	Description *string              `json:"description"`
-	Parent      *FootprintCategory   `json:"parent"`
-	Children    []*FootprintCategory `json:"children"`
-	Footprints  []*Footprint         `json:"footprints"`
-}
-
-func (FootprintCategory) IsNode() {}
 
 type FootprintCategoryInput struct {
-	Name        string  `json:"name"`
-	Description *string `json:"description"`
-	Parent      *string `json:"parent"`
+	Name        string        `json:"name"`
+	Description *string       `json:"description"`
+	Parent      *snowflake.ID `json:"parent"`
 }
 
 type FootprintInput struct {
-	Name        string  `json:"name"`
-	Description *string `json:"description"`
-	Image       *string `json:"image"`
-	Category    string  `json:"category"`
+	Name        string        `json:"name"`
+	Description *string       `json:"description"`
+	Image       *snowflake.ID `json:"image"`
+	Category    *snowflake.ID `json:"category"`
 }
-
-type Part struct {
-	ID                 string               `json:"id"`
-	Name               string               `json:"name"`
-	Category           *PartCategory        `json:"category"`
-	Description        *string              `json:"description"`
-	Footprint          *Footprint           `json:"footprint"`
-	Unit               *PartMeasurementUnit `json:"unit"`
-	StorageLocation    *StorageLocation     `json:"storageLocation"`
-	Attachments        []*PartAttachment    `json:"attachments"`
-	Comment            *string              `json:"comment"`
-	StockLevel         float64              `json:"stockLevel"`
-	MinStockLevel      float64              `json:"minStockLevel"`
-	Parameters         []*PartParameter     `json:"parameters"`
-	InternalPartNumber string               `json:"internalPartNumber"`
-}
-
-func (Part) IsNode() {}
 
 type PartAttachment struct {
-	ID      string          `json:"id"`
-	IsImage bool            `json:"isImage"`
-	File    *graphql.Upload `json:"file"`
+	ID      snowflake.ID   `json:"id"`
+	IsImage bool           `json:"isImage"`
+	File    graphql.Upload `json:"file"`
 }
 
 func (PartAttachment) IsNode() {}
 
 type PartAttachmentInput struct {
-	IsImage bool            `json:"isImage"`
-	File    *graphql.Upload `json:"file"`
+	IsImage bool           `json:"isImage"`
+	File    graphql.Upload `json:"file"`
 }
-
-type PartCategory struct {
-	ID          string          `json:"id"`
-	Name        string          `json:"name"`
-	Description *string         `json:"description"`
-	Parts       []*PartCategory `json:"parts"`
-	Children    []*PartCategory `json:"children"`
-	Parent      *string         `json:"parent"`
-	Root        *bool           `json:"root"`
-}
-
-func (PartCategory) IsNode() {}
 
 type PartCategoryInput struct {
-	Name        string  `json:"name"`
-	Description *string `json:"description"`
-	Parent      *string `json:"parent"`
+	Name        string        `json:"name"`
+	Description *string       `json:"description"`
+	Parent      *snowflake.ID `json:"parent"`
 }
 
 type PartInput struct {
-	Name               string    `json:"name"`
-	Category           string    `json:"category"`
-	Description        *string   `json:"description"`
-	Footprint          string    `json:"footprint"`
-	Unit               string    `json:"unit"`
-	StorageLocation    string    `json:"storageLocation"`
-	Attachments        []*string `json:"attachments"`
-	Comment            *string   `json:"comment"`
-	StockLevel         float64   `json:"stockLevel"`
-	MinStockLevel      float64   `json:"minStockLevel"`
-	Parameters         []*string `json:"parameters"`
-	InternalPartNumber string    `json:"internalPartNumber"`
+	Name               string          `json:"name"`
+	Category           snowflake.ID    `json:"category"`
+	Description        *string         `json:"description"`
+	Footprint          snowflake.ID    `json:"footprint"`
+	Unit               snowflake.ID    `json:"unit"`
+	StorageLocation    snowflake.ID    `json:"storageLocation"`
+	Attachments        []*snowflake.ID `json:"attachments"`
+	Comment            *string         `json:"comment"`
+	StockLevel         float64         `json:"stockLevel"`
+	MinStockLevel      float64         `json:"minStockLevel"`
+	Parameters         []*snowflake.ID `json:"parameters"`
+	InternalPartNumber string          `json:"internalPartNumber"`
 }
 
 type PartMeasurementUnit struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	ShortName string `json:"shortName"`
-	Default   bool   `json:"default"`
+	ID        snowflake.ID `json:"id"`
+	Name      string       `json:"name"`
+	ShortName string       `json:"shortName"`
+	Default   bool         `json:"default"`
 }
 
 func (PartMeasurementUnit) IsNode() {}
@@ -139,48 +88,40 @@ type PartMeasurementUnitInput struct {
 	ShortName string `json:"shortName"`
 }
 
-type PartParameter struct {
-	ID                 string    `json:"id"`
-	Part               *Part     `json:"part"`
-	Name               string    `json:"name"`
-	Description        *string   `json:"description"`
-	Unit               *Unit     `json:"unit"`
-	Value              *float64  `json:"value"`
-	NormalizedValue    *float64  `json:"normalizedValue"`
-	MaxValue           *float64  `json:"maxValue"`
-	NormalizedMaxValue *float64  `json:"normalizedMaxValue"`
-	MinValue           *float64  `json:"minValue"`
-	NormalizedMinValue *float64  `json:"normalizedMinValue"`
-	StringValue        *string   `json:"stringValue"`
-	ValueType          ValueType `json:"valueType"`
-	SiPrefix           *SiPrefix `json:"siPrefix"`
-	MinSiPrefix        *SiPrefix `json:"minSiPrefix"`
-	MaxSiPrefix        *SiPrefix `json:"maxSiPrefix"`
+type PartParameterInput struct {
+	Part        snowflake.ID `json:"part"`
+	Name        string       `json:"name"`
+	Description *string      `json:"description"`
+	Unit        snowflake.ID `json:"unit"`
+	Value       *float64     `json:"value"`
+	MaxValue    *float64     `json:"maxValue"`
+	MinValue    *float64     `json:"minValue"`
+	StringValue *string      `json:"stringValue"`
+	ValueType   ValueType    `json:"valueType"`
+	SiPrefix    snowflake.ID `json:"siPrefix"`
+	MinSiPrefix snowflake.ID `json:"minSiPrefix"`
+	MaxSiPrefix snowflake.ID `json:"maxSiPrefix"`
 }
 
-func (PartParameter) IsNode() {}
+type QuerySiPrefixInput struct {
+	Symbol   *string `json:"symbol"`
+	Prefix   *string `json:"prefix"`
+	Exponent *int    `json:"exponent"`
+	Base     *int    `json:"base"`
+}
 
-type PartParameterInput struct {
-	Part        string    `json:"part"`
-	Name        string    `json:"name"`
-	Description *string   `json:"description"`
-	Unit        string    `json:"unit"`
-	Value       *float64  `json:"value"`
-	MaxValue    *float64  `json:"maxValue"`
-	MinValue    *float64  `json:"minValue"`
-	StringValue *string   `json:"stringValue"`
-	ValueType   ValueType `json:"valueType"`
-	SiPrefix    string    `json:"siPrefix"`
-	MinSiPrefix string    `json:"minSiPrefix"`
-	MaxSiPrefix string    `json:"maxSiPrefix"`
+type QueryUnitInput struct {
+	Name     *string        `json:"name"`
+	Symbol   *string        `json:"symbol"`
+	Prefixes []snowflake.ID `json:"prefixes"`
 }
 
 type SiPrefix struct {
-	ID       string `json:"id"`
-	Symbol   string `json:"symbol"`
-	Prefix   string `json:"prefix"`
-	Exponent int    `json:"exponent"`
-	Base     int    `json:"base"`
+	ID       snowflake.ID `json:"id"`
+	Symbol   string       `json:"symbol"`
+	Prefix   string       `json:"prefix"`
+	Exponent int          `json:"exponent"`
+	Base     int          `json:"base"`
 }
 
 func (SiPrefix) IsNode() {}
@@ -188,56 +129,37 @@ func (SiPrefix) IsNode() {}
 type SiPrefixInput struct {
 	Symbol   string `json:"symbol"`
 	Prefix   string `json:"prefix"`
-	Default  string `json:"default"`
 	Exponent int    `json:"exponent"`
 	Base     int    `json:"base"`
 }
 
-type StorageLocation struct {
-	ID       string                   `json:"id"`
-	Name     string                   `json:"name"`
-	Category *StorageLocationCategory `json:"category"`
-	Parts    []*Part                  `json:"parts"`
-}
-
-func (StorageLocation) IsNode() {}
-
-type StorageLocationCategory struct {
-	ID               string                     `json:"id"`
-	Name             string                     `json:"name"`
-	Description      *string                    `json:"description"`
-	StorageLocations []*StorageLocation         `json:"storageLocations"`
-	Root             *bool                      `json:"root"`
-	Parent           *StorageLocationCategory   `json:"parent"`
-	Children         []*StorageLocationCategory `json:"children"`
-}
-
-func (StorageLocationCategory) IsNode() {}
-
 type StorageLocationCategoryInput struct {
-	Parent      *string `json:"parent"`
-	Name        string  `json:"name"`
-	Description *string `json:"description"`
+	Parent      *snowflake.ID `json:"parent"`
+	Name        string        `json:"name"`
+	Description *string       `json:"description"`
+}
+
+type StorageLocationImage struct {
+	ID   snowflake.ID   `json:"id"`
+	File graphql.Upload `json:"file"`
+}
+
+func (StorageLocationImage) IsNode() {}
+
+type StorageLocationImageInput struct {
+	File graphql.Upload `json:"file"`
 }
 
 type StorageLocationInput struct {
-	Name     string `json:"name"`
-	Category string `json:"category"`
+	Name     string                     `json:"name"`
+	Image    *StorageLocationImageInput `json:"Image"`
+	Category snowflake.ID               `json:"category"`
 }
-
-type Unit struct {
-	ID       string      `json:"id"`
-	Name     string      `json:"name"`
-	Symbol   string      `json:"symbol"`
-	Prefixes []*SiPrefix `json:"prefixes"`
-}
-
-func (Unit) IsNode() {}
 
 type UnitInput struct {
-	Name     string   `json:"name"`
-	Symbol   string   `json:"symbol"`
-	Prefixes []string `json:"prefixes"`
+	Name     string          `json:"name"`
+	Symbol   string          `json:"symbol"`
+	Prefixes []*snowflake.ID `json:"prefixes"`
 }
 
 type ValueType string

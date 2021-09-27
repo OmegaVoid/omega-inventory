@@ -1,17 +1,17 @@
 type Footprint implements Node {
-	id:                 ID!
-	name:               String!
-	category:           FootprintCategory!
-	description:        String
-	attachments:        [FootprintAttachment]
-	image: FootprintAttachment
+	id:          ID!
+	name:        String!
+	category:    FootprintCategory!
+	description: String
+	attachments: [FootprintAttachment]
+	image:       FootprintAttachment
 }
 
 input FootprintInput {
-	name:               String!
-	description:        String
-	image: ID
-	category: ID!
+	name:        String!
+	description: String
+	image:       ID
+	category:    ID
 }
 
 
@@ -21,7 +21,7 @@ type FootprintCategory implements Node {
 	description: String
 	parent:      FootprintCategory
 	children:    [FootprintCategory]
-	footprints:       [Footprint]
+	footprints:  [Footprint]
 }
 
 input FootprintCategoryInput {
@@ -32,11 +32,11 @@ input FootprintCategoryInput {
 
 
 type FootprintAttachment implements Node {
-	id:                 ID!
-	file:                Upload
+	id:   ID!
+	file: Upload!
 }
 
 input FootprintAttachmentInput {
-	isImage:            Boolean!
-	file:                Upload
+	isImage: Boolean!
+	file:    Upload!
 }

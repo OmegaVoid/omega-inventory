@@ -8,7 +8,12 @@ type Unit implements Node{
 input UnitInput {
 	name: String!
 	symbol: String!
-	prefixes: [ID!]!
+	prefixes: [ID]
+}
+input QueryUnitInput {
+	name: String
+	symbol: String
+	prefixes: [ID!]
 }
 
 type SiPrefix implements Node{
@@ -22,7 +27,12 @@ type SiPrefix implements Node{
 input SiPrefixInput {
 	symbol: String!
 	prefix: String!
-	default: ID!
 	exponent: Int!
 	base: Int!
+}
+input QuerySiPrefixInput {
+	symbol: String
+	prefix: String
+	exponent: Int
+	base: Int
 }

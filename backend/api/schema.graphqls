@@ -26,32 +26,7 @@ enum ValueType {
 	NUMBER
 }
 
-
 type Query {
-	parts(category: PartCategoryInput): [Part!]
-	part(id: ID!): Part!
-
-	partCategories(category: PartCategoryInput): [PartCategory!]
-	partCategory(id: ID!): PartCategory!
-
-	storageLocations(category: StorageLocationCategoryInput): [StorageLocation!]
-	storageLocation(id: ID!): StorageLocation!
-
-	storageLocationCategories(category: StorageLocationCategoryInput): [StorageLocationCategory!]
-	storageLocationCategory(id: ID!): StorageLocationCategory!
-
-	partMeasurementUnits: [PartMeasurementUnit!]
-	partMeasurementUnit(id: ID!): PartMeasurementUnit!
-
-	siPrefixes: [SiPrefix!]
-	siPrefix(id: ID!): SiPrefix!
-
-	units: [Unit!]
-	unit(id: ID!): Unit!
-
-	partAttachments: [PartAttachment!]
-	partAttachment(id: ID!): PartAttachment!
-
 	footprints: [Footprint!]
 	footprint(id: ID!): Footprint!
 
@@ -61,11 +36,56 @@ type Query {
 	footprintAttachments: [FootprintAttachment!]
 	footprintAttachment(id: ID!): FootprintAttachment!
 
+
+	parts(category: PartCategoryInput): [Part!]
+	part(id: ID!): Part!
+
+	partCategories(category: PartCategoryInput): [PartCategory!]
+	partCategory(id: ID!): PartCategory!
+
+	partMeasurementUnits: [PartMeasurementUnit!]
+	partMeasurementUnit(id: ID!): PartMeasurementUnit!
+
+	partAttachments: [PartAttachment!]
+	partAttachment(id: ID!): PartAttachment!
+
 	partParameters: [PartParameter!]
 	partParameter(id: ID!): PartParameter!
+
+
+
+	storageLocations(category: StorageLocationCategoryInput): [StorageLocation!]
+	storageLocation(id: ID!): StorageLocation!
+
+	storageLocationCategories(category: StorageLocationCategoryInput): [StorageLocationCategory!]
+	storageLocationCategory(id: ID!): StorageLocationCategory!
+
+	storageLocationImages: [StorageLocationImage!]
+	storageLocationImage(id: ID!): StorageLocationImage!
+
+
+
+	siPrefixes(params: QuerySiPrefixInput): [SiPrefix!]
+	siPrefix(id: ID!): SiPrefix!
+
+	units(params: QueryUnitInput): [Unit!]
+	unit(id: ID!): Unit!
 }
 
 type Mutation {
+	createFootprint(input: FootprintInput!): Footprint!
+	updateFootprint(id: ID!, input: FootprintInput!): Footprint!
+	deleteFootprint(id: ID!): Footprint!
+
+	createFootprintCategory(input: FootprintCategoryInput!): FootprintCategory!
+	updateFootprintCategory(id: ID!, input: FootprintCategoryInput!): FootprintCategory!
+	deleteFootprintCategory(id: ID!): FootprintCategory!
+
+	createFootprintAttachment(input: FootprintAttachmentInput!): FootprintAttachment!
+	updateFootprintAttachment(id: ID!, input: FootprintAttachmentInput!): FootprintAttachment!
+	deleteFootprintAttachment(id: ID!): FootprintAttachment!
+
+
 	createPartMeasurementUnit(input: PartMeasurementUnitInput!):          PartMeasurementUnit!
 	updatePartMeasurementUnit(id: ID!, input: PartMeasurementUnitInput!): PartMeasurementUnit!
 	deletePartMeasurementUnit(id: ID!):                                 PartMeasurementUnit!
@@ -73,6 +93,20 @@ type Mutation {
 	createPartCategory(input: PartCategoryInput!):          PartCategory!
 	updatePartCategory(id: ID!, input: PartCategoryInput!): PartCategory!
 	deletePartCategory(id: ID!):                          PartCategory!
+
+	createPart(input: PartInput!):          Part!
+	updatePart(id: ID!, input: PartInput!): Part!
+	deletePart(id: ID!):                  Part!
+
+	createPartAttachment(input: PartAttachmentInput!):          PartAttachment!
+	updatePartAttachment(id: ID!, input: PartAttachmentInput!): PartAttachment!
+	deletePartAttachment(id: ID!):                  PartAttachment!
+
+	createPartParameter(input: PartParameterInput!):          PartParameter!
+	updatePartParameter(id: ID!, input: PartParameterInput!): PartParameter!
+	deletePartParameter(id: ID!):                  PartParameter!
+
+
 
 	createStorageLocationCategory(input: StorageLocationCategoryInput!):          StorageLocationCategory!
 	updateStorageLocationCategory(id: ID!, input: StorageLocationCategoryInput!): StorageLocationCategory!
@@ -82,9 +116,11 @@ type Mutation {
 	updateStorageLocation(id: ID!, input: StorageLocationInput!): StorageLocation!
 	deleteStorageLocation(id: ID!):                             StorageLocation!
 
-	createPart(input: PartInput!):          Part!
-	updatePart(id: ID!, input: PartInput!): Part!
-	deletePart(id: ID!):                  Part!
+	createStorageLocationImage(input: StorageLocationImageInput!):          StorageLocationImage!
+	updateStorageLocationImage(id: ID!, input: StorageLocationImageInput!): StorageLocationImage!
+	deleteStorageLocationImage(id: ID!):                  StorageLocationImage!
+
+
 
 	createSiPrefix(input: SiPrefixInput!):          SiPrefix!
 	updateSiPrefix(id: ID!, input: SiPrefixInput!): SiPrefix!
@@ -93,28 +129,4 @@ type Mutation {
 	createUnit(input: UnitInput!):          Unit!
 	updateUnit(id: ID!, input: UnitInput!): Unit!
 	deleteUnit(id: ID!):                  Unit!
-
-	createPartAttachment(input: PartAttachmentInput!):          PartAttachment!
-	updatePartAttachment(id: ID!, input: PartAttachmentInput!): PartAttachment!
-	deletePartAttachment(id: ID!):                  PartAttachment!
-
-	createFootprint(input: FootprintInput!):          Footprint!
-	updateFootprint(id: ID!, input: FootprintInput!): Footprint!
-	deleteFootprint(id: ID!):                  Footprint!
-
-	createFootprintCategory(input: FootprintCategoryInput!):          FootprintCategory!
-	updateFootprintCategory(id: ID!, input: FootprintCategoryInput!): FootprintCategory!
-	deleteFootprintCategory(id: ID!):                  FootprintCategory!
-
-	createFootprintAttachment(input: FootprintAttachmentInput!):          FootprintAttachment!
-	updateFootprintAttachment(id: ID!, input: FootprintAttachmentInput!): FootprintAttachment!
-	deleteFootprintAttachment(id: ID!):                  FootprintAttachment!
-
-
-	createPartParameter(input: PartParameterInput!):          PartParameter!
-	updatePartParameter(id: ID!, input: PartParameterInput!): PartParameter!
-	deletePartParameter(id: ID!):                  PartParameter!
-
-
-
 }

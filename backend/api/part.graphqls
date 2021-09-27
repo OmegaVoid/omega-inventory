@@ -38,12 +38,12 @@ input PartInput {
 type PartAttachment implements Node {
 	id:                 ID!
 	isImage:            Boolean!
-	file:                Upload
+	file:                Upload!
 }
 
 input PartAttachmentInput {
 	isImage:            Boolean!
-	file:                Upload
+	file:                Upload!
 }
 
 type PartCategory implements Node {
@@ -52,7 +52,7 @@ type PartCategory implements Node {
 	description: String
 	parts:       [PartCategory]
 	children: [PartCategory]
-	parent: ID
+	parent: PartCategory
 	root: Boolean
 }
 

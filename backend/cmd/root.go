@@ -14,7 +14,6 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/beego/beego/v2/client/orm"
 	_ "github.com/lib/pq"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -60,11 +59,6 @@ func init() {
 
 	cobra.OnInitialize(initConfig)
 
-	err := orm.RegisterDriver("postgres", orm.DRPostgres)
-	if err != nil {
-		log.Fatal().Err(err).Msg("register database driver")
-	}
-
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
@@ -72,31 +66,20 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.omega-inventory.yaml)")
 	rootCmd.PersistentFlags().IntP("graphql_port", "", 0, "Port to run GraphQL server on")
 	rootCmd.PersistentFlags().StringP("database", "", "", "database connection string")
-	rootCmd.PersistentFlags().StringP("database_type", "", "", "database type, supported value:\npostgres")
-	err = viper.BindPFlag("database", rootCmd.PersistentFlags().Lookup("database"))
-	if err != nil {
+
+	if err := viper.BindPFlag("database", rootCmd.PersistentFlags().Lookup("database")); err != nil {
 		log.Fatal().Err(err).Msg("bind config value database to flag")
 	}
-	err = viper.BindPFlag("database_type", rootCmd.PersistentFlags().Lookup("database_type"))
-	if err != nil {
-		log.Fatal().Err(err).Msg("bind config value database_type to flag")
-	}
-	err = viper.BindPFlag("graphql_port", rootCmd.PersistentFlags().Lookup("graphql_port"))
-	if err != nil {
+	if err := viper.BindPFlag("graphql_port", rootCmd.PersistentFlags().Lookup("graphql_port")); err != nil {
 		log.Fatal().Err(err).Msg("bind config value graphql_port to flag")
 	}
-	viper.SetDefault("database", "user=gorm dbname=gorm password=gorm sslmode=disable")
-	viper.SetDefault("database_type", "postgres")
+	viper.SetDefault("database", "postgres://gorm:gorm@localhost:5432/gorm")
 	viper.SetDefault("graphql_port", 8080)
 	viper.AutomaticEnv()
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 
-	err = orm.RegisterDataBase("default", viper.GetString("database_type"), viper.GetString("database"))
-	if err != nil {
-		log.Fatal().Err(err).Msg("register database")
-	}
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -111,7 +94,7 @@ func initConfig() {
 
 		// Search config in home directory with name ".omega-inventory" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigType("yaml")
+		viper.SetConfigType("hcl")
 		viper.SetConfigName(".omega-inventory")
 	}
 
@@ -121,4 +104,5 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		log.Info().Str("config_file", viper.ConfigFileUsed()).Msg("using config file")
 	}
+
 }
