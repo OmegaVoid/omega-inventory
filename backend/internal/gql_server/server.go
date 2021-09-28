@@ -1,6 +1,7 @@
 package gql_server
 
 import (
+	"github.com/spf13/afero"
 	"io"
 	"time"
 
@@ -37,7 +38,12 @@ func GinServer(log zerolog.Logger) *gin.Engine {
 	r.Use(gin.Recovery())
 	r.Use(gzip.Gzip(gzip.DefaultCompression))
 
-	r.POST("/query", router.GraphqlHandler())
+	fs := afero.NewOsFs()
+	layer := afero.NewMemMapFs()
+	ufs := afero.NewCacheOnReadFs(fs, layer, 100*time.Second)
+	httpFs := afero.NewHttpFs(ufs)
+	r.StaticFS("/files", httpFs.Dir("imgs"))
+	r.POST("/query", router.GraphqlHandler(&afero.Afero{Fs: fs}))
 	r.GET("/", router.PlaygroundHandler())
 	return r
 }

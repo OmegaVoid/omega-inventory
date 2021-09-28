@@ -5,49 +5,67 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/OmegaVoid/omega-inventory/internal/generated"
 	"github.com/OmegaVoid/omega-inventory/pkg/model"
+	"github.com/georgysavva/scany/pgxscan"
+	errs "github.com/pkg/errors"
 )
 
-func (r *storageLocationResolver) Image(ctx context.Context, obj *model.StorageLocation) (
-	*model.StorageLocationImage,
-	error,
-) {
-	panic(fmt.Errorf("not implemented"))
+func (r *storageLocationResolver) Image(ctx context.Context, obj *model.StorageLocation) (*model.File, error) {
+	return &model.File{
+		ID: *obj.ImageID, // TODO
+	}, nil
 }
 
-func (r *storageLocationResolver) Category(
-	ctx context.Context,
-	obj *model.StorageLocation,
-) (*model.StorageLocationCategory, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *storageLocationResolver) Category(ctx context.Context, obj *model.StorageLocation) (*model.StorageLocationCategory, error) {
+	var storageLocationCategory model.StorageLocationCategory
+	// language=SQL
+	err := pgxscan.Get(ctx, r.DbPool, &storageLocationCategory, `select * from omegarogue.public.storage_location_category where id=?;`, obj.CategoryID)
+	if err != nil {
+		return nil, errs.Wrap(err, "get category")
+	}
+	return &storageLocationCategory, nil
 }
 
 func (r *storageLocationResolver) Parts(ctx context.Context, obj *model.StorageLocation) ([]*model.Part, error) {
-	panic(fmt.Errorf("not implemented"))
+	var parts []*model.Part
+	// language=SQL
+	err := pgxscan.Select(ctx, r.DbPool, &parts, `select * from omegarogue.public.part where category=?;`, obj.ID)
+	if err != nil {
+		return nil, errs.Wrap(err, "get footprints")
+	}
+	return parts, nil
 }
 
-func (r *storageLocationCategoryResolver) StorageLocations(
-	ctx context.Context,
-	obj *model.StorageLocationCategory,
-) ([]*model.StorageLocation, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *storageLocationCategoryResolver) StorageLocations(ctx context.Context, obj *model.StorageLocationCategory) ([]*model.StorageLocation, error) {
+	var storageLocations []*model.StorageLocation
+	// language=SQL
+	err := pgxscan.Select(ctx, r.DbPool, &storageLocations, `select * from omegarogue.public.storage_location where category=?;`, obj.ID)
+	if err != nil {
+		return nil, errs.Wrap(err, "get footprints")
+	}
+	return storageLocations, nil
 }
 
-func (r *storageLocationCategoryResolver) Parent(
-	ctx context.Context,
-	obj *model.StorageLocationCategory,
-) (*model.StorageLocationCategory, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *storageLocationCategoryResolver) Parent(ctx context.Context, obj *model.StorageLocationCategory) (*model.StorageLocationCategory, error) {
+	var parent model.StorageLocationCategory
+	// language=SQL
+	err := pgxscan.Get(ctx, r.DbPool, &parent, `select * from omegarogue.public.storage_location_category where id = ?`, obj.ParentID)
+	if err != nil {
+		return nil, errs.Wrapf(err, "get parent")
+	}
+	return &parent, nil
 }
 
-func (r *storageLocationCategoryResolver) Children(
-	ctx context.Context,
-	obj *model.StorageLocationCategory,
-) ([]*model.StorageLocationCategory, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *storageLocationCategoryResolver) Children(ctx context.Context, obj *model.StorageLocationCategory) ([]*model.StorageLocationCategory, error) {
+	var children []*model.StorageLocationCategory
+	// language=SQL
+	err := pgxscan.Get(ctx, r.DbPool, &children, `select * from omegarogue.public.storage_location_category where path ~ '*.' || ? || '.*{1}'`, obj.ID)
+	if err != nil {
+		return nil, errs.Wrapf(err, "get parent")
+	}
+	return children, nil
 }
 
 // StorageLocation returns generated.StorageLocationResolver implementation.

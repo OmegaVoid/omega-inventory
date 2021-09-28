@@ -3,8 +3,8 @@ type Footprint implements Node {
 	name:        String!
 	category:    FootprintCategory!
 	description: String
-	attachments: [FootprintAttachment]
-	image:       FootprintAttachment
+	attachments: [File]
+	image:       File
 }
 
 input FootprintInput {
@@ -28,15 +28,4 @@ input FootprintCategoryInput {
 	name:        String!
 	description: String
 	parent:      ID
-}
-
-
-type FootprintAttachment implements Node {
-	id:   ID!
-	file: Upload!
-}
-
-input FootprintAttachmentInput {
-	isImage: Boolean!
-	file:    Upload!
 }

@@ -8,7 +8,7 @@ type Part implements Node {
 	storageLocation:    StorageLocation!
 	#Manufacturers:     [PartManufacturer!]!
 	#Distributors:      [PartDistributor!]!
-	attachments:        [PartAttachment]
+	attachments:        [File]
 	comment:            String
 	stockLevel:         Float!
 	minStockLevel:      Float!
@@ -35,22 +35,12 @@ input PartInput {
 	internalPartNumber: String!
 }
 
-type PartAttachment implements Node {
-	id:                 ID!
-	isImage:            Boolean!
-	file:                Upload!
-}
-
-input PartAttachmentInput {
-	isImage:            Boolean!
-	file:                Upload!
-}
 
 type PartCategory implements Node {
 	id:          ID!
 	name:        String!
 	description: String
-	parts:       [PartCategory]
+	parts:       [Part]
 	children: [PartCategory]
 	parent: PartCategory
 	root: Boolean

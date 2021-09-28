@@ -9,6 +9,8 @@ import (
 
 	"github.com/OmegaVoid/omega-inventory/internal/generated"
 	"github.com/OmegaVoid/omega-inventory/pkg/model"
+	"github.com/georgysavva/scany/pgxscan"
+	errs "github.com/pkg/errors"
 )
 
 func (r *partResolver) Category(ctx context.Context, obj *model.Part) (*model.PartCategory, error) {
@@ -27,24 +29,55 @@ func (r *partResolver) StorageLocation(ctx context.Context, obj *model.Part) (*m
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *partResolver) Attachments(ctx context.Context, obj *model.Part) ([]*model.PartAttachment, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *partResolver) Attachments(ctx context.Context, obj *model.Part) ([]*model.File, error) {
+	attachments := make([]*model.File, len(obj.AttachmentsID))
+	for i, id := range obj.AttachmentsID {
+
+		attachments[i] = &model.File{
+			ID: *id, // TODO
+		}
+	}
+	return attachments, nil
 }
 
 func (r *partResolver) Parameters(ctx context.Context, obj *model.Part) ([]*model.PartParameter, error) {
-	panic(fmt.Errorf("not implemented"))
+	var partParameters []*model.PartParameter
+	// language=SQL
+	err := pgxscan.Select(ctx, r.DbPool, &partParameters, `select * from omegarogue.public.part_parameters where part=?;`, obj.ID)
+	if err != nil {
+		return nil, errs.Wrap(err, "get part parameters")
+	}
+	return partParameters, nil
 }
 
-func (r *partCategoryResolver) Parts(ctx context.Context, obj *model.PartCategory) ([]*model.PartCategory, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *partCategoryResolver) Parts(ctx context.Context, obj *model.PartCategory) ([]*model.Part, error) {
+	var parts []*model.Part
+	// language=SQL
+	err := pgxscan.Select(ctx, r.DbPool, &parts, `select * from omegarogue.public.part where category=?;`, obj.ID)
+	if err != nil {
+		return nil, errs.Wrap(err, "get parts")
+	}
+	return parts, nil
 }
 
 func (r *partCategoryResolver) Children(ctx context.Context, obj *model.PartCategory) ([]*model.PartCategory, error) {
-	panic(fmt.Errorf("not implemented"))
+	var children []*model.PartCategory
+	// language=SQL
+	err := pgxscan.Get(ctx, r.DbPool, &children, `select * from omegarogue.public.part_category where path ~ '*.' || ? || '.*{1}'`, obj.ID)
+	if err != nil {
+		return nil, errs.Wrapf(err, "get parent")
+	}
+	return children, nil
 }
 
 func (r *partCategoryResolver) Parent(ctx context.Context, obj *model.PartCategory) (*model.PartCategory, error) {
-	panic(fmt.Errorf("not implemented"))
+	var parent model.PartCategory
+	// language=SQL
+	err := pgxscan.Get(ctx, r.DbPool, &parent, `select * from omegarogue.public.part_category where id = ?`, obj.ParentID)
+	if err != nil {
+		return nil, errs.Wrapf(err, "get parent")
+	}
+	return &parent, nil
 }
 
 func (r *partParameterResolver) Part(ctx context.Context, obj *model.PartParameter) (*model.Part, error) {

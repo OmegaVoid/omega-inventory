@@ -22,16 +22,16 @@ func UnmarshalSnowflake(v interface{}) (snowflake.ID, error) {
 	switch v := v.(type) {
 	case string:
 		id, err := snowflake.ParseBase2(v)
-		if err != nil {
-			id, err := snowflake.ParseBase36(v)
-			if err != nil {
-				id, err := snowflake.ParseBase64(v)
-				if err != nil {
-					return snowflake.ParseString(v)
-				}
-				return id, nil
-			}
+		if err == nil {
 			return id, nil
+		}
+		id, err = snowflake.ParseBase36(v)
+		if err == nil {
+			return id, nil
+		}
+		id, err = snowflake.ParseBase64(v)
+		if err != nil {
+			return snowflake.ParseString(v)
 		}
 		return id, nil
 	case int:
@@ -46,12 +46,12 @@ func UnmarshalSnowflake(v interface{}) (snowflake.ID, error) {
 		return snowflake.ParseInt64(int64(i)), nil
 	case []byte:
 		id, err := snowflake.ParseBase58(v)
-		if err != nil {
-			id, err := snowflake.ParseBase32(v)
-			if err != nil {
-				return snowflake.ParseBytes(v)
-			}
+		if err == nil {
 			return id, nil
+		}
+		id, err = snowflake.ParseBase32(v)
+		if err != nil {
+			return snowflake.ParseBytes(v)
 		}
 		return id, nil
 	case [8]byte:

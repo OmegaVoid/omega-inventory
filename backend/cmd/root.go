@@ -66,6 +66,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.omega-inventory.yaml)")
 	rootCmd.PersistentFlags().IntP("graphql_port", "", 0, "Port to run GraphQL server on")
 	rootCmd.PersistentFlags().StringP("database", "", "", "database connection string")
+	rootCmd.PersistentFlags().StringP("file_serve", "", "", "url where files are served")
 
 	if err := viper.BindPFlag("database", rootCmd.PersistentFlags().Lookup("database")); err != nil {
 		log.Fatal().Err(err).Msg("bind config value database to flag")
@@ -73,8 +74,12 @@ func init() {
 	if err := viper.BindPFlag("graphql_port", rootCmd.PersistentFlags().Lookup("graphql_port")); err != nil {
 		log.Fatal().Err(err).Msg("bind config value graphql_port to flag")
 	}
+	if err := viper.BindPFlag("file_serve", rootCmd.PersistentFlags().Lookup("file_serve")); err != nil {
+		log.Fatal().Err(err).Msg("bind config value file_serve to flag")
+	}
 	viper.SetDefault("database", "postgres://gorm:gorm@localhost:5432/gorm")
 	viper.SetDefault("graphql_port", 8080)
+	viper.SetDefault("file_serve", "http://localhost:8080/files")
 	viper.AutomaticEnv()
 
 	// Cobra also supports local flags, which will only run

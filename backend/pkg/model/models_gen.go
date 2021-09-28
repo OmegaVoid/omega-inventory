@@ -15,17 +15,18 @@ type Node interface {
 	IsNode()
 }
 
-type FootprintAttachment struct {
-	ID   snowflake.ID   `json:"id"`
-	File graphql.Upload `json:"file"`
+type File struct {
+	ID           snowflake.ID `json:"id"`
+	Name         string       `json:"name"`
+	OriginalName *string      `json:"originalName"`
+	Mimetype     string       `json:"mimetype"`
+	Size         int          `json:"size"`
+	Extension    string       `json:"extension"`
+	Description  *string      `json:"description"`
+	IsImage      bool         `json:"isImage"`
 }
 
-func (FootprintAttachment) IsNode() {}
-
-type FootprintAttachmentInput struct {
-	IsImage bool           `json:"isImage"`
-	File    graphql.Upload `json:"file"`
-}
+func (File) IsNode() {}
 
 type FootprintCategoryInput struct {
 	Name        string        `json:"name"`
@@ -38,19 +39,6 @@ type FootprintInput struct {
 	Description *string       `json:"description"`
 	Image       *snowflake.ID `json:"image"`
 	Category    *snowflake.ID `json:"category"`
-}
-
-type PartAttachment struct {
-	ID      snowflake.ID   `json:"id"`
-	IsImage bool           `json:"isImage"`
-	File    graphql.Upload `json:"file"`
-}
-
-func (PartAttachment) IsNode() {}
-
-type PartAttachmentInput struct {
-	IsImage bool           `json:"isImage"`
-	File    graphql.Upload `json:"file"`
 }
 
 type PartCategoryInput struct {
@@ -139,21 +127,10 @@ type StorageLocationCategoryInput struct {
 	Description *string       `json:"description"`
 }
 
-type StorageLocationImage struct {
-	ID   snowflake.ID   `json:"id"`
-	File graphql.Upload `json:"file"`
-}
-
-func (StorageLocationImage) IsNode() {}
-
-type StorageLocationImageInput struct {
-	File graphql.Upload `json:"file"`
-}
-
 type StorageLocationInput struct {
-	Name     string                     `json:"name"`
-	Image    *StorageLocationImageInput `json:"Image"`
-	Category snowflake.ID               `json:"category"`
+	Name     string          `json:"name"`
+	Image    *graphql.Upload `json:"Image"`
+	Category snowflake.ID    `json:"category"`
 }
 
 type UnitInput struct {

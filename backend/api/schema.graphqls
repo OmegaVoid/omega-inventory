@@ -16,10 +16,23 @@ directive @goField(
 
 scalar Upload
 
+scalar Any
+
 interface Node {
 	id:   ID!
 }
 
+
+type File implements Node {
+	id:   ID!
+	name: String!
+	originalName: String
+	mimetype: String!
+	size: Int!
+	extension: String!
+	description: String
+	isImage: Boolean!
+}
 
 enum ValueType {
 	STRING
@@ -33,8 +46,8 @@ type Query {
 	footprintCategories: [FootprintCategory!]
 	footprintCategory(id: ID!): FootprintCategory!
 
-	footprintAttachments: [FootprintAttachment!]
-	footprintAttachment(id: ID!): FootprintAttachment!
+	footprintAttachments: [File!]
+	footprintAttachment(id: ID!): File!
 
 
 	parts(category: PartCategoryInput): [Part!]
@@ -46,8 +59,8 @@ type Query {
 	partMeasurementUnits: [PartMeasurementUnit!]
 	partMeasurementUnit(id: ID!): PartMeasurementUnit!
 
-	partAttachments: [PartAttachment!]
-	partAttachment(id: ID!): PartAttachment!
+	partAttachments: [File!]
+	partAttachment(id: ID!): File!
 
 	partParameters: [PartParameter!]
 	partParameter(id: ID!): PartParameter!
@@ -60,8 +73,8 @@ type Query {
 	storageLocationCategories(category: StorageLocationCategoryInput): [StorageLocationCategory!]
 	storageLocationCategory(id: ID!): StorageLocationCategory!
 
-	storageLocationImages: [StorageLocationImage!]
-	storageLocationImage(id: ID!): StorageLocationImage!
+	storageLocationImages: [File!]
+	storageLocationImage(id: ID!): File!
 
 
 
@@ -81,9 +94,9 @@ type Mutation {
 	updateFootprintCategory(id: ID!, input: FootprintCategoryInput!): FootprintCategory!
 	deleteFootprintCategory(id: ID!): FootprintCategory!
 
-	createFootprintAttachment(input: FootprintAttachmentInput!): FootprintAttachment!
-	updateFootprintAttachment(id: ID!, input: FootprintAttachmentInput!): FootprintAttachment!
-	deleteFootprintAttachment(id: ID!): FootprintAttachment!
+	createFootprintAttachment(isImage: Boolean!, file: Upload!): File!
+	updateFootprintAttachment(id: ID!, isImage: Boolean!, file: Upload!): File!
+	deleteFootprintAttachment(id: ID!): File!
 
 
 	createPartMeasurementUnit(input: PartMeasurementUnitInput!):          PartMeasurementUnit!
@@ -94,17 +107,17 @@ type Mutation {
 	updatePartCategory(id: ID!, input: PartCategoryInput!): PartCategory!
 	deletePartCategory(id: ID!):                          PartCategory!
 
-	createPart(input: PartInput!):          Part!
+	createPart(input: PartInput!): Part!
 	updatePart(id: ID!, input: PartInput!): Part!
-	deletePart(id: ID!):                  Part!
+	deletePart(id: ID!): Part!
 
-	createPartAttachment(input: PartAttachmentInput!):          PartAttachment!
-	updatePartAttachment(id: ID!, input: PartAttachmentInput!): PartAttachment!
-	deletePartAttachment(id: ID!):                  PartAttachment!
+	createPartAttachment(isImage: Boolean!, file: Upload!): File!
+	updatePartAttachment(id: ID!, isImage: Boolean!, file: Upload!): File!
+	deletePartAttachment(id: ID!): File!
 
-	createPartParameter(input: PartParameterInput!):          PartParameter!
+	createPartParameter(input: PartParameterInput!): PartParameter!
 	updatePartParameter(id: ID!, input: PartParameterInput!): PartParameter!
-	deletePartParameter(id: ID!):                  PartParameter!
+	deletePartParameter(id: ID!): PartParameter!
 
 
 
@@ -116,9 +129,9 @@ type Mutation {
 	updateStorageLocation(id: ID!, input: StorageLocationInput!): StorageLocation!
 	deleteStorageLocation(id: ID!):                             StorageLocation!
 
-	createStorageLocationImage(input: StorageLocationImageInput!):          StorageLocationImage!
-	updateStorageLocationImage(id: ID!, input: StorageLocationImageInput!): StorageLocationImage!
-	deleteStorageLocationImage(id: ID!):                  StorageLocationImage!
+	createStorageLocationImage(file: Upload!): File!
+	updateStorageLocationImage(id: ID!, file: Upload!): File!
+	deleteStorageLocationImage(id: ID!): File!
 
 
 
