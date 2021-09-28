@@ -32,22 +32,21 @@ execute procedure before_insert_on_footprint_category();
 
 
 insert into footprint_category
-values (default, 'RootCategory', null, null, null, null);
+values (default, 'RootCategory', null, null);
 insert into footprint_category
-values (default, 'BGA', null, 'RootCategory', null, null);
+values (default, 'BGA', null, 'RootCategory');
 insert into footprint_category
-values (default, 'CBGA', null, 'BGA', null, null);
+values (default, 'CBGA', null, 'BGA');
 insert into footprint_category
-values (default, 'FCBGA', null, 'BGA', null, null);
+values (default, 'FCBGA', null, 'BGA');
 insert into footprint_category
-values (default, 'PBGA', null, 'BGA', null, null);
+values (default, 'PBGA', null, 'BGA');
 insert into footprint_category
-values (default, 'DIP', null, 'RootCategory', null, null);
+values (default, 'DIP', null, 'RootCategory');
 insert into footprint_category
-values (default, 'CERDIP', null, 'DIP', null, null);
+values (default, 'CERDIP', null, 'DIP');
 insert into footprint_category
-values (default, 'PDIP', null, 'DIP', null, null);
-
+values (default, 'PDIP', null, 'DIP');
 
 ---- create above / drop below ----
 drop table footprint_category;
