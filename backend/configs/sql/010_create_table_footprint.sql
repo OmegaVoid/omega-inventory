@@ -4,7 +4,7 @@ create table footprint
 		constraint footprint_pk primary key,
 	fname       varchar                       not null,
 	category    bigint
-		constraint footprint_footprint_category_id_fk references footprint_category on update cascade on delete cascade,
+		constraint footprint_category_id_fk references footprint_category on update cascade on delete cascade,
 	description text,
 	attachments bigint[],
 	image       bigint
