@@ -13,9 +13,7 @@ import (
 )
 
 func (r *storageLocationResolver) Image(ctx context.Context, obj *model.StorageLocation) (*model.File, error) {
-	return &model.File{
-		ID: *obj.ImageID, // TODO
-	}, nil
+	return r.File(ctx, obj.ImageID)
 }
 
 func (r *storageLocationResolver) Category(ctx context.Context, obj *model.StorageLocation) (*model.StorageLocationCategory, error) {
@@ -33,7 +31,7 @@ func (r *storageLocationResolver) Parts(ctx context.Context, obj *model.StorageL
 	// language=SQL
 	err := pgxscan.Select(ctx, r.DbPool, &parts, `select * from omegarogue.public.part where category=?;`, obj.ID)
 	if err != nil {
-		return nil, errs.Wrap(err, "get footprints")
+		return nil, errs.Wrap(err, "get parts")
 	}
 	return parts, nil
 }
@@ -43,7 +41,7 @@ func (r *storageLocationCategoryResolver) StorageLocations(ctx context.Context, 
 	// language=SQL
 	err := pgxscan.Select(ctx, r.DbPool, &storageLocations, `select * from omegarogue.public.storage_location where category=?;`, obj.ID)
 	if err != nil {
-		return nil, errs.Wrap(err, "get footprints")
+		return nil, errs.Wrap(err, "get storage locations")
 	}
 	return storageLocations, nil
 }
@@ -51,7 +49,10 @@ func (r *storageLocationCategoryResolver) StorageLocations(ctx context.Context, 
 func (r *storageLocationCategoryResolver) Parent(ctx context.Context, obj *model.StorageLocationCategory) (*model.StorageLocationCategory, error) {
 	var parent model.StorageLocationCategory
 	// language=SQL
-	err := pgxscan.Get(ctx, r.DbPool, &parent, `select * from omegarogue.public.storage_location_category where id = ?`, obj.ParentID)
+	err := pgxscan.Get(
+		ctx, r.DbPool, &parent,
+		`select * from omegarogue.public.storage_location_category where id::text = subpath(?, -1, 1)`, obj.Path,
+	)
 	if err != nil {
 		return nil, errs.Wrapf(err, "get parent")
 	}
@@ -61,9 +62,12 @@ func (r *storageLocationCategoryResolver) Parent(ctx context.Context, obj *model
 func (r *storageLocationCategoryResolver) Children(ctx context.Context, obj *model.StorageLocationCategory) ([]*model.StorageLocationCategory, error) {
 	var children []*model.StorageLocationCategory
 	// language=SQL
-	err := pgxscan.Get(ctx, r.DbPool, &children, `select * from omegarogue.public.storage_location_category where path ~ '*.' || ? || '.*{1}'`, obj.ID)
+	err := pgxscan.Get(
+		ctx, r.DbPool, &children, `select * from omegarogue.public.storage_location_category where path ~ ? || '.*{1}'`,
+		obj.Path,
+	)
 	if err != nil {
-		return nil, errs.Wrapf(err, "get parent")
+		return nil, errs.Wrapf(err, "get children")
 	}
 	return children, nil
 }

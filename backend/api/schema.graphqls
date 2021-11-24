@@ -34,6 +34,11 @@ type File implements Node {
 	isImage: Boolean!
 }
 
+input FileInput {
+	content: Upload
+	description: String
+}
+
 enum ValueType {
 	STRING
 	NUMBER
@@ -46,8 +51,6 @@ type Query {
 	footprintCategories: [FootprintCategory!]
 	footprintCategory(id: ID!): FootprintCategory!
 
-	footprintAttachments: [File!]
-	footprintAttachment(id: ID!): File!
 
 
 	parts(category: PartCategoryInput): [Part!]
@@ -59,8 +62,6 @@ type Query {
 	partMeasurementUnits: [PartMeasurementUnit!]
 	partMeasurementUnit(id: ID!): PartMeasurementUnit!
 
-	partAttachments: [File!]
-	partAttachment(id: ID!): File!
 
 	partParameters: [PartParameter!]
 	partParameter(id: ID!): PartParameter!
@@ -73,9 +74,6 @@ type Query {
 	storageLocationCategories(category: StorageLocationCategoryInput): [StorageLocationCategory!]
 	storageLocationCategory(id: ID!): StorageLocationCategory!
 
-	storageLocationImages: [File!]
-	storageLocationImage(id: ID!): File!
-
 
 
 	siPrefixes(params: QuerySiPrefixInput): [SiPrefix!]
@@ -83,6 +81,12 @@ type Query {
 
 	units(params: QueryUnitInput): [Unit!]
 	unit(id: ID!): Unit!
+
+
+
+	files: [File!]
+	file(id: ID!): File!
+
 }
 
 type Mutation {
@@ -93,10 +97,6 @@ type Mutation {
 	createFootprintCategory(input: FootprintCategoryInput!): FootprintCategory!
 	updateFootprintCategory(id: ID!, input: FootprintCategoryInput!): FootprintCategory!
 	deleteFootprintCategory(id: ID!): FootprintCategory!
-
-	createFootprintAttachment(isImage: Boolean!, file: Upload!): File!
-	updateFootprintAttachment(id: ID!, isImage: Boolean!, file: Upload!): File!
-	deleteFootprintAttachment(id: ID!): File!
 
 
 	createPartMeasurementUnit(input: PartMeasurementUnitInput!):          PartMeasurementUnit!
@@ -111,9 +111,6 @@ type Mutation {
 	updatePart(id: ID!, input: PartInput!): Part!
 	deletePart(id: ID!): Part!
 
-	createPartAttachment(isImage: Boolean!, file: Upload!): File!
-	updatePartAttachment(id: ID!, isImage: Boolean!, file: Upload!): File!
-	deletePartAttachment(id: ID!): File!
 
 	createPartParameter(input: PartParameterInput!): PartParameter!
 	updatePartParameter(id: ID!, input: PartParameterInput!): PartParameter!
@@ -129,11 +126,6 @@ type Mutation {
 	updateStorageLocation(id: ID!, input: StorageLocationInput!): StorageLocation!
 	deleteStorageLocation(id: ID!):                             StorageLocation!
 
-	createStorageLocationImage(file: Upload!): File!
-	updateStorageLocationImage(id: ID!, file: Upload!): File!
-	deleteStorageLocationImage(id: ID!): File!
-
-
 
 	createSiPrefix(input: SiPrefixInput!):          SiPrefix!
 	updateSiPrefix(id: ID!, input: SiPrefixInput!): SiPrefix!
@@ -142,4 +134,10 @@ type Mutation {
 	createUnit(input: UnitInput!):          Unit!
 	updateUnit(id: ID!, input: UnitInput!): Unit!
 	deleteUnit(id: ID!):                  Unit!
+
+
+	createFile(input: FileInput!): File!
+	updateFile(id: ID!, input: FileInput!): File!
+	deleteFile(id: ID!): File!
+
 }

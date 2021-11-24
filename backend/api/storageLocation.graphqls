@@ -8,7 +8,7 @@ type StorageLocation implements Node {
 
 input StorageLocationInput  {
 	name:     String!
-	Image:  Upload
+	Image:  ID
 	category: ID!
 }
 

@@ -28,6 +28,11 @@ type File struct {
 
 func (File) IsNode() {}
 
+type FileInput struct {
+	Content     *graphql.Upload `json:"content"`
+	Description *string         `json:"description"`
+}
+
 type FootprintCategoryInput struct {
 	Name        string        `json:"name"`
 	Description *string       `json:"description"`
@@ -39,6 +44,7 @@ type FootprintInput struct {
 	Description *string       `json:"description"`
 	Image       *snowflake.ID `json:"image"`
 	Category    *snowflake.ID `json:"category"`
+	Attachments []*FileInput  `json:"attachments"`
 }
 
 type PartCategoryInput struct {
@@ -48,18 +54,17 @@ type PartCategoryInput struct {
 }
 
 type PartInput struct {
-	Name               string          `json:"name"`
-	Category           snowflake.ID    `json:"category"`
-	Description        *string         `json:"description"`
-	Footprint          snowflake.ID    `json:"footprint"`
-	Unit               snowflake.ID    `json:"unit"`
-	StorageLocation    snowflake.ID    `json:"storageLocation"`
-	Attachments        []*snowflake.ID `json:"attachments"`
-	Comment            *string         `json:"comment"`
-	StockLevel         float64         `json:"stockLevel"`
-	MinStockLevel      float64         `json:"minStockLevel"`
-	Parameters         []*snowflake.ID `json:"parameters"`
-	InternalPartNumber string          `json:"internalPartNumber"`
+	Name            string          `json:"name"`
+	Category        snowflake.ID    `json:"category"`
+	Description     *string         `json:"description"`
+	Footprint       snowflake.ID    `json:"footprint"`
+	Unit            snowflake.ID    `json:"unit"`
+	StorageLocation snowflake.ID    `json:"storageLocation"`
+	Attachments     []*snowflake.ID `json:"attachments"`
+	Comment         *string         `json:"comment"`
+	StockLevel      float64         `json:"stockLevel"`
+	MinStockLevel   float64         `json:"minStockLevel"`
+	Parameters      []*snowflake.ID `json:"parameters"`
 }
 
 type PartMeasurementUnit struct {
@@ -128,9 +133,9 @@ type StorageLocationCategoryInput struct {
 }
 
 type StorageLocationInput struct {
-	Name     string          `json:"name"`
-	Image    *graphql.Upload `json:"Image"`
-	Category snowflake.ID    `json:"category"`
+	Name     string        `json:"name"`
+	Image    *snowflake.ID `json:"Image"`
+	Category snowflake.ID  `json:"category"`
 }
 
 type UnitInput struct {

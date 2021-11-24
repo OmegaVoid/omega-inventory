@@ -23,7 +23,4 @@ alter function id_generator() owner to postgres;
 
 select id_generator();
 
----- create above / drop below ----
-
-drop function id_generator(out bigint);
-drop sequence global_id_sequence;
+create extension ltree;

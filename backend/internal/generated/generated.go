@@ -84,61 +84,54 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
+		CreateFile                    func(childComplexity int, input model.FileInput) int
 		CreateFootprint               func(childComplexity int, input model.FootprintInput) int
-		CreateFootprintAttachment     func(childComplexity int, isImage bool, file graphql.Upload) int
 		CreateFootprintCategory       func(childComplexity int, input model.FootprintCategoryInput) int
 		CreatePart                    func(childComplexity int, input model.PartInput) int
-		CreatePartAttachment          func(childComplexity int, isImage bool, file graphql.Upload) int
 		CreatePartCategory            func(childComplexity int, input model.PartCategoryInput) int
 		CreatePartMeasurementUnit     func(childComplexity int, input model.PartMeasurementUnitInput) int
 		CreatePartParameter           func(childComplexity int, input model.PartParameterInput) int
 		CreateSiPrefix                func(childComplexity int, input model.SiPrefixInput) int
 		CreateStorageLocation         func(childComplexity int, input model.StorageLocationInput) int
 		CreateStorageLocationCategory func(childComplexity int, input model.StorageLocationCategoryInput) int
-		CreateStorageLocationImage    func(childComplexity int, file graphql.Upload) int
 		CreateUnit                    func(childComplexity int, input model.UnitInput) int
+		DeleteFile                    func(childComplexity int, id snowflake.ID) int
 		DeleteFootprint               func(childComplexity int, id snowflake.ID) int
-		DeleteFootprintAttachment     func(childComplexity int, id snowflake.ID) int
 		DeleteFootprintCategory       func(childComplexity int, id snowflake.ID) int
 		DeletePart                    func(childComplexity int, id snowflake.ID) int
-		DeletePartAttachment          func(childComplexity int, id snowflake.ID) int
 		DeletePartCategory            func(childComplexity int, id snowflake.ID) int
 		DeletePartMeasurementUnit     func(childComplexity int, id snowflake.ID) int
 		DeletePartParameter           func(childComplexity int, id snowflake.ID) int
 		DeleteSiPrefix                func(childComplexity int, id snowflake.ID) int
 		DeleteStorageLocation         func(childComplexity int, id snowflake.ID) int
 		DeleteStorageLocationCategory func(childComplexity int, id snowflake.ID) int
-		DeleteStorageLocationImage    func(childComplexity int, id snowflake.ID) int
 		DeleteUnit                    func(childComplexity int, id snowflake.ID) int
+		UpdateFile                    func(childComplexity int, id snowflake.ID, input model.FileInput) int
 		UpdateFootprint               func(childComplexity int, id snowflake.ID, input model.FootprintInput) int
-		UpdateFootprintAttachment     func(childComplexity int, id snowflake.ID, isImage bool, file graphql.Upload) int
 		UpdateFootprintCategory       func(childComplexity int, id snowflake.ID, input model.FootprintCategoryInput) int
 		UpdatePart                    func(childComplexity int, id snowflake.ID, input model.PartInput) int
-		UpdatePartAttachment          func(childComplexity int, id snowflake.ID, isImage bool, file graphql.Upload) int
 		UpdatePartCategory            func(childComplexity int, id snowflake.ID, input model.PartCategoryInput) int
 		UpdatePartMeasurementUnit     func(childComplexity int, id snowflake.ID, input model.PartMeasurementUnitInput) int
 		UpdatePartParameter           func(childComplexity int, id snowflake.ID, input model.PartParameterInput) int
 		UpdateSiPrefix                func(childComplexity int, id snowflake.ID, input model.SiPrefixInput) int
 		UpdateStorageLocation         func(childComplexity int, id snowflake.ID, input model.StorageLocationInput) int
 		UpdateStorageLocationCategory func(childComplexity int, id snowflake.ID, input model.StorageLocationCategoryInput) int
-		UpdateStorageLocationImage    func(childComplexity int, id snowflake.ID, file graphql.Upload) int
 		UpdateUnit                    func(childComplexity int, id snowflake.ID, input model.UnitInput) int
 	}
 
 	Part struct {
-		Attachments        func(childComplexity int) int
-		Category           func(childComplexity int) int
-		Comment            func(childComplexity int) int
-		Description        func(childComplexity int) int
-		Footprint          func(childComplexity int) int
-		ID                 func(childComplexity int) int
-		InternalPartNumber func(childComplexity int) int
-		MinStockLevel      func(childComplexity int) int
-		Name               func(childComplexity int) int
-		Parameters         func(childComplexity int) int
-		StockLevel         func(childComplexity int) int
-		StorageLocation    func(childComplexity int) int
-		Unit               func(childComplexity int) int
+		Attachments     func(childComplexity int) int
+		Category        func(childComplexity int) int
+		Comment         func(childComplexity int) int
+		Description     func(childComplexity int) int
+		Footprint       func(childComplexity int) int
+		ID              func(childComplexity int) int
+		MinStockLevel   func(childComplexity int) int
+		Name            func(childComplexity int) int
+		Parameters      func(childComplexity int) int
+		StockLevel      func(childComplexity int) int
+		StorageLocation func(childComplexity int) int
+		Unit            func(childComplexity int) int
 	}
 
 	PartCategory struct {
@@ -178,15 +171,13 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
+		File                      func(childComplexity int, id snowflake.ID) int
+		Files                     func(childComplexity int) int
 		Footprint                 func(childComplexity int, id snowflake.ID) int
-		FootprintAttachment       func(childComplexity int, id snowflake.ID) int
-		FootprintAttachments      func(childComplexity int) int
 		FootprintCategories       func(childComplexity int) int
 		FootprintCategory         func(childComplexity int, id snowflake.ID) int
 		Footprints                func(childComplexity int) int
 		Part                      func(childComplexity int, id snowflake.ID) int
-		PartAttachment            func(childComplexity int, id snowflake.ID) int
-		PartAttachments           func(childComplexity int) int
 		PartCategories            func(childComplexity int, category *model.PartCategoryInput) int
 		PartCategory              func(childComplexity int, id snowflake.ID) int
 		PartMeasurementUnit       func(childComplexity int, id snowflake.ID) int
@@ -199,8 +190,6 @@ type ComplexityRoot struct {
 		StorageLocation           func(childComplexity int, id snowflake.ID) int
 		StorageLocationCategories func(childComplexity int, category *model.StorageLocationCategoryInput) int
 		StorageLocationCategory   func(childComplexity int, id snowflake.ID) int
-		StorageLocationImage      func(childComplexity int, id snowflake.ID) int
-		StorageLocationImages     func(childComplexity int) int
 		StorageLocations          func(childComplexity int, category *model.StorageLocationCategoryInput) int
 		Unit                      func(childComplexity int, id snowflake.ID) int
 		Units                     func(childComplexity int, params *model.QueryUnitInput) int
@@ -258,9 +247,6 @@ type MutationResolver interface {
 	CreateFootprintCategory(ctx context.Context, input model.FootprintCategoryInput) (*model.FootprintCategory, error)
 	UpdateFootprintCategory(ctx context.Context, id snowflake.ID, input model.FootprintCategoryInput) (*model.FootprintCategory, error)
 	DeleteFootprintCategory(ctx context.Context, id snowflake.ID) (*model.FootprintCategory, error)
-	CreateFootprintAttachment(ctx context.Context, isImage bool, file graphql.Upload) (*model.File, error)
-	UpdateFootprintAttachment(ctx context.Context, id snowflake.ID, isImage bool, file graphql.Upload) (*model.File, error)
-	DeleteFootprintAttachment(ctx context.Context, id snowflake.ID) (*model.File, error)
 	CreatePartMeasurementUnit(ctx context.Context, input model.PartMeasurementUnitInput) (*model.PartMeasurementUnit, error)
 	UpdatePartMeasurementUnit(ctx context.Context, id snowflake.ID, input model.PartMeasurementUnitInput) (*model.PartMeasurementUnit, error)
 	DeletePartMeasurementUnit(ctx context.Context, id snowflake.ID) (*model.PartMeasurementUnit, error)
@@ -270,9 +256,6 @@ type MutationResolver interface {
 	CreatePart(ctx context.Context, input model.PartInput) (*model.Part, error)
 	UpdatePart(ctx context.Context, id snowflake.ID, input model.PartInput) (*model.Part, error)
 	DeletePart(ctx context.Context, id snowflake.ID) (*model.Part, error)
-	CreatePartAttachment(ctx context.Context, isImage bool, file graphql.Upload) (*model.File, error)
-	UpdatePartAttachment(ctx context.Context, id snowflake.ID, isImage bool, file graphql.Upload) (*model.File, error)
-	DeletePartAttachment(ctx context.Context, id snowflake.ID) (*model.File, error)
 	CreatePartParameter(ctx context.Context, input model.PartParameterInput) (*model.PartParameter, error)
 	UpdatePartParameter(ctx context.Context, id snowflake.ID, input model.PartParameterInput) (*model.PartParameter, error)
 	DeletePartParameter(ctx context.Context, id snowflake.ID) (*model.PartParameter, error)
@@ -282,15 +265,15 @@ type MutationResolver interface {
 	CreateStorageLocation(ctx context.Context, input model.StorageLocationInput) (*model.StorageLocation, error)
 	UpdateStorageLocation(ctx context.Context, id snowflake.ID, input model.StorageLocationInput) (*model.StorageLocation, error)
 	DeleteStorageLocation(ctx context.Context, id snowflake.ID) (*model.StorageLocation, error)
-	CreateStorageLocationImage(ctx context.Context, file graphql.Upload) (*model.File, error)
-	UpdateStorageLocationImage(ctx context.Context, id snowflake.ID, file graphql.Upload) (*model.File, error)
-	DeleteStorageLocationImage(ctx context.Context, id snowflake.ID) (*model.File, error)
 	CreateSiPrefix(ctx context.Context, input model.SiPrefixInput) (*model.SiPrefix, error)
 	UpdateSiPrefix(ctx context.Context, id snowflake.ID, input model.SiPrefixInput) (*model.SiPrefix, error)
 	DeleteSiPrefix(ctx context.Context, id snowflake.ID) (*model.SiPrefix, error)
 	CreateUnit(ctx context.Context, input model.UnitInput) (*model.Unit, error)
 	UpdateUnit(ctx context.Context, id snowflake.ID, input model.UnitInput) (*model.Unit, error)
 	DeleteUnit(ctx context.Context, id snowflake.ID) (*model.Unit, error)
+	CreateFile(ctx context.Context, input model.FileInput) (*model.File, error)
+	UpdateFile(ctx context.Context, id snowflake.ID, input model.FileInput) (*model.File, error)
+	DeleteFile(ctx context.Context, id snowflake.ID) (*model.File, error)
 }
 type PartResolver interface {
 	Category(ctx context.Context, obj *model.Part) (*model.PartCategory, error)
@@ -312,7 +295,6 @@ type PartParameterResolver interface {
 
 	Unit(ctx context.Context, obj *model.PartParameter) (*model.Unit, error)
 
-	ValueType(ctx context.Context, obj *model.PartParameter) (model.ValueType, error)
 	SiPrefix(ctx context.Context, obj *model.PartParameter) (*model.SiPrefix, error)
 	MinSiPrefix(ctx context.Context, obj *model.PartParameter) (*model.SiPrefix, error)
 	MaxSiPrefix(ctx context.Context, obj *model.PartParameter) (*model.SiPrefix, error)
@@ -322,28 +304,24 @@ type QueryResolver interface {
 	Footprint(ctx context.Context, id snowflake.ID) (*model.Footprint, error)
 	FootprintCategories(ctx context.Context) ([]*model.FootprintCategory, error)
 	FootprintCategory(ctx context.Context, id snowflake.ID) (*model.FootprintCategory, error)
-	FootprintAttachments(ctx context.Context) ([]*model.File, error)
-	FootprintAttachment(ctx context.Context, id snowflake.ID) (*model.File, error)
 	Parts(ctx context.Context, category *model.PartCategoryInput) ([]*model.Part, error)
 	Part(ctx context.Context, id snowflake.ID) (*model.Part, error)
 	PartCategories(ctx context.Context, category *model.PartCategoryInput) ([]*model.PartCategory, error)
 	PartCategory(ctx context.Context, id snowflake.ID) (*model.PartCategory, error)
 	PartMeasurementUnits(ctx context.Context) ([]*model.PartMeasurementUnit, error)
 	PartMeasurementUnit(ctx context.Context, id snowflake.ID) (*model.PartMeasurementUnit, error)
-	PartAttachments(ctx context.Context) ([]*model.File, error)
-	PartAttachment(ctx context.Context, id snowflake.ID) (*model.File, error)
 	PartParameters(ctx context.Context) ([]*model.PartParameter, error)
 	PartParameter(ctx context.Context, id snowflake.ID) (*model.PartParameter, error)
 	StorageLocations(ctx context.Context, category *model.StorageLocationCategoryInput) ([]*model.StorageLocation, error)
 	StorageLocation(ctx context.Context, id snowflake.ID) (*model.StorageLocation, error)
 	StorageLocationCategories(ctx context.Context, category *model.StorageLocationCategoryInput) ([]*model.StorageLocationCategory, error)
 	StorageLocationCategory(ctx context.Context, id snowflake.ID) (*model.StorageLocationCategory, error)
-	StorageLocationImages(ctx context.Context) ([]*model.File, error)
-	StorageLocationImage(ctx context.Context, id snowflake.ID) (*model.File, error)
 	SiPrefixes(ctx context.Context, params *model.QuerySiPrefixInput) ([]*model.SiPrefix, error)
 	SiPrefix(ctx context.Context, id snowflake.ID) (*model.SiPrefix, error)
 	Units(ctx context.Context, params *model.QueryUnitInput) ([]*model.Unit, error)
 	Unit(ctx context.Context, id snowflake.ID) (*model.Unit, error)
+	Files(ctx context.Context) ([]*model.File, error)
+	File(ctx context.Context, id snowflake.ID) (*model.File, error)
 }
 type StorageLocationResolver interface {
 	Image(ctx context.Context, obj *model.StorageLocation) (*model.File, error)
@@ -515,6 +493,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.FootprintCategory.Parent(childComplexity), true
 
+	case "Mutation.createFile":
+		if e.complexity.Mutation.CreateFile == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createFile_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CreateFile(childComplexity, args["input"].(model.FileInput)), true
+
 	case "Mutation.createFootprint":
 		if e.complexity.Mutation.CreateFootprint == nil {
 			break
@@ -526,18 +516,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreateFootprint(childComplexity, args["input"].(model.FootprintInput)), true
-
-	case "Mutation.createFootprintAttachment":
-		if e.complexity.Mutation.CreateFootprintAttachment == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createFootprintAttachment_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreateFootprintAttachment(childComplexity, args["isImage"].(bool), args["file"].(graphql.Upload)), true
 
 	case "Mutation.createFootprintCategory":
 		if e.complexity.Mutation.CreateFootprintCategory == nil {
@@ -562,18 +540,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreatePart(childComplexity, args["input"].(model.PartInput)), true
-
-	case "Mutation.createPartAttachment":
-		if e.complexity.Mutation.CreatePartAttachment == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createPartAttachment_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreatePartAttachment(childComplexity, args["isImage"].(bool), args["file"].(graphql.Upload)), true
 
 	case "Mutation.createPartCategory":
 		if e.complexity.Mutation.CreatePartCategory == nil {
@@ -647,18 +613,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreateStorageLocationCategory(childComplexity, args["input"].(model.StorageLocationCategoryInput)), true
 
-	case "Mutation.createStorageLocationImage":
-		if e.complexity.Mutation.CreateStorageLocationImage == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createStorageLocationImage_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreateStorageLocationImage(childComplexity, args["file"].(graphql.Upload)), true
-
 	case "Mutation.createUnit":
 		if e.complexity.Mutation.CreateUnit == nil {
 			break
@@ -671,6 +625,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreateUnit(childComplexity, args["input"].(model.UnitInput)), true
 
+	case "Mutation.deleteFile":
+		if e.complexity.Mutation.DeleteFile == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteFile_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.DeleteFile(childComplexity, args["id"].(snowflake.ID)), true
+
 	case "Mutation.deleteFootprint":
 		if e.complexity.Mutation.DeleteFootprint == nil {
 			break
@@ -682,18 +648,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.DeleteFootprint(childComplexity, args["id"].(snowflake.ID)), true
-
-	case "Mutation.deleteFootprintAttachment":
-		if e.complexity.Mutation.DeleteFootprintAttachment == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_deleteFootprintAttachment_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeleteFootprintAttachment(childComplexity, args["id"].(snowflake.ID)), true
 
 	case "Mutation.deleteFootprintCategory":
 		if e.complexity.Mutation.DeleteFootprintCategory == nil {
@@ -718,18 +672,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.DeletePart(childComplexity, args["id"].(snowflake.ID)), true
-
-	case "Mutation.deletePartAttachment":
-		if e.complexity.Mutation.DeletePartAttachment == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_deletePartAttachment_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeletePartAttachment(childComplexity, args["id"].(snowflake.ID)), true
 
 	case "Mutation.deletePartCategory":
 		if e.complexity.Mutation.DeletePartCategory == nil {
@@ -803,18 +745,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.DeleteStorageLocationCategory(childComplexity, args["id"].(snowflake.ID)), true
 
-	case "Mutation.deleteStorageLocationImage":
-		if e.complexity.Mutation.DeleteStorageLocationImage == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_deleteStorageLocationImage_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeleteStorageLocationImage(childComplexity, args["id"].(snowflake.ID)), true
-
 	case "Mutation.deleteUnit":
 		if e.complexity.Mutation.DeleteUnit == nil {
 			break
@@ -827,6 +757,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.DeleteUnit(childComplexity, args["id"].(snowflake.ID)), true
 
+	case "Mutation.updateFile":
+		if e.complexity.Mutation.UpdateFile == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateFile_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateFile(childComplexity, args["id"].(snowflake.ID), args["input"].(model.FileInput)), true
+
 	case "Mutation.updateFootprint":
 		if e.complexity.Mutation.UpdateFootprint == nil {
 			break
@@ -838,18 +780,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdateFootprint(childComplexity, args["id"].(snowflake.ID), args["input"].(model.FootprintInput)), true
-
-	case "Mutation.updateFootprintAttachment":
-		if e.complexity.Mutation.UpdateFootprintAttachment == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updateFootprintAttachment_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdateFootprintAttachment(childComplexity, args["id"].(snowflake.ID), args["isImage"].(bool), args["file"].(graphql.Upload)), true
 
 	case "Mutation.updateFootprintCategory":
 		if e.complexity.Mutation.UpdateFootprintCategory == nil {
@@ -874,18 +804,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePart(childComplexity, args["id"].(snowflake.ID), args["input"].(model.PartInput)), true
-
-	case "Mutation.updatePartAttachment":
-		if e.complexity.Mutation.UpdatePartAttachment == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updatePartAttachment_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdatePartAttachment(childComplexity, args["id"].(snowflake.ID), args["isImage"].(bool), args["file"].(graphql.Upload)), true
 
 	case "Mutation.updatePartCategory":
 		if e.complexity.Mutation.UpdatePartCategory == nil {
@@ -959,18 +877,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateStorageLocationCategory(childComplexity, args["id"].(snowflake.ID), args["input"].(model.StorageLocationCategoryInput)), true
 
-	case "Mutation.updateStorageLocationImage":
-		if e.complexity.Mutation.UpdateStorageLocationImage == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updateStorageLocationImage_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdateStorageLocationImage(childComplexity, args["id"].(snowflake.ID), args["file"].(graphql.Upload)), true
-
 	case "Mutation.updateUnit":
 		if e.complexity.Mutation.UpdateUnit == nil {
 			break
@@ -1024,13 +930,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Part.ID(childComplexity), true
-
-	case "Part.internalPartNumber":
-		if e.complexity.Part.InternalPartNumber == nil {
-			break
-		}
-
-		return e.complexity.Part.InternalPartNumber(childComplexity), true
 
 	case "Part.minStockLevel":
 		if e.complexity.Part.MinStockLevel == nil {
@@ -1263,6 +1162,25 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PartParameter.ValueType(childComplexity), true
 
+	case "Query.file":
+		if e.complexity.Query.File == nil {
+			break
+		}
+
+		args, err := ec.field_Query_file_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.File(childComplexity, args["id"].(snowflake.ID)), true
+
+	case "Query.files":
+		if e.complexity.Query.Files == nil {
+			break
+		}
+
+		return e.complexity.Query.Files(childComplexity), true
+
 	case "Query.footprint":
 		if e.complexity.Query.Footprint == nil {
 			break
@@ -1274,25 +1192,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.Footprint(childComplexity, args["id"].(snowflake.ID)), true
-
-	case "Query.footprintAttachment":
-		if e.complexity.Query.FootprintAttachment == nil {
-			break
-		}
-
-		args, err := ec.field_Query_footprintAttachment_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.FootprintAttachment(childComplexity, args["id"].(snowflake.ID)), true
-
-	case "Query.footprintAttachments":
-		if e.complexity.Query.FootprintAttachments == nil {
-			break
-		}
-
-		return e.complexity.Query.FootprintAttachments(childComplexity), true
 
 	case "Query.footprintCategories":
 		if e.complexity.Query.FootprintCategories == nil {
@@ -1331,25 +1230,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.Part(childComplexity, args["id"].(snowflake.ID)), true
-
-	case "Query.partAttachment":
-		if e.complexity.Query.PartAttachment == nil {
-			break
-		}
-
-		args, err := ec.field_Query_partAttachment_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.PartAttachment(childComplexity, args["id"].(snowflake.ID)), true
-
-	case "Query.partAttachments":
-		if e.complexity.Query.PartAttachments == nil {
-			break
-		}
-
-		return e.complexity.Query.PartAttachments(childComplexity), true
 
 	case "Query.partCategories":
 		if e.complexity.Query.PartCategories == nil {
@@ -1484,25 +1364,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.StorageLocationCategory(childComplexity, args["id"].(snowflake.ID)), true
-
-	case "Query.storageLocationImage":
-		if e.complexity.Query.StorageLocationImage == nil {
-			break
-		}
-
-		args, err := ec.field_Query_storageLocationImage_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.StorageLocationImage(childComplexity, args["id"].(snowflake.ID)), true
-
-	case "Query.storageLocationImages":
-		if e.complexity.Query.StorageLocationImages == nil {
-			break
-		}
-
-		return e.complexity.Query.StorageLocationImages(childComplexity), true
 
 	case "Query.storageLocations":
 		if e.complexity.Query.StorageLocations == nil {
@@ -1756,7 +1617,7 @@ var sources = []*ast.Source{
 	name:        String!
 	category:    FootprintCategory!
 	description: String
-	attachments: [File]
+	attachments: [File!]
 	image:       File
 }
 
@@ -1765,6 +1626,7 @@ input FootprintInput {
 	description: String
 	image:       ID
 	category:    ID
+	attachments: [FileInput!]
 }
 
 
@@ -1773,8 +1635,8 @@ type FootprintCategory implements Node {
 	name:        String!
 	description: String
 	parent:      FootprintCategory
-	children:    [FootprintCategory]
-	footprints:  [Footprint]
+	children:    [FootprintCategory!]
+	footprints:  [Footprint!]
 }
 
 input FootprintCategoryInput {
@@ -1798,7 +1660,6 @@ input FootprintCategoryInput {
 	minStockLevel:      Float!
 	#ProjectParts:      [ProjectPart!]!
 	parameters:         [PartParameter]
-	internalPartNumber: String!
 }
 
 input PartInput {
@@ -1816,7 +1677,6 @@ input PartInput {
 	minStockLevel:      Float!
 	#ProjectParts:      [ProjectPart!]!
 	parameters:         [ID]
-	internalPartNumber: String!
 }
 
 
@@ -1918,6 +1778,11 @@ type File implements Node {
 	isImage: Boolean!
 }
 
+input FileInput {
+	content: Upload
+	description: String
+}
+
 enum ValueType {
 	STRING
 	NUMBER
@@ -1930,8 +1795,6 @@ type Query {
 	footprintCategories: [FootprintCategory!]
 	footprintCategory(id: ID!): FootprintCategory!
 
-	footprintAttachments: [File!]
-	footprintAttachment(id: ID!): File!
 
 
 	parts(category: PartCategoryInput): [Part!]
@@ -1943,8 +1806,6 @@ type Query {
 	partMeasurementUnits: [PartMeasurementUnit!]
 	partMeasurementUnit(id: ID!): PartMeasurementUnit!
 
-	partAttachments: [File!]
-	partAttachment(id: ID!): File!
 
 	partParameters: [PartParameter!]
 	partParameter(id: ID!): PartParameter!
@@ -1957,9 +1818,6 @@ type Query {
 	storageLocationCategories(category: StorageLocationCategoryInput): [StorageLocationCategory!]
 	storageLocationCategory(id: ID!): StorageLocationCategory!
 
-	storageLocationImages: [File!]
-	storageLocationImage(id: ID!): File!
-
 
 
 	siPrefixes(params: QuerySiPrefixInput): [SiPrefix!]
@@ -1967,6 +1825,12 @@ type Query {
 
 	units(params: QueryUnitInput): [Unit!]
 	unit(id: ID!): Unit!
+
+
+
+	files: [File!]
+	file(id: ID!): File!
+
 }
 
 type Mutation {
@@ -1977,10 +1841,6 @@ type Mutation {
 	createFootprintCategory(input: FootprintCategoryInput!): FootprintCategory!
 	updateFootprintCategory(id: ID!, input: FootprintCategoryInput!): FootprintCategory!
 	deleteFootprintCategory(id: ID!): FootprintCategory!
-
-	createFootprintAttachment(isImage: Boolean!, file: Upload!): File!
-	updateFootprintAttachment(id: ID!, isImage: Boolean!, file: Upload!): File!
-	deleteFootprintAttachment(id: ID!): File!
 
 
 	createPartMeasurementUnit(input: PartMeasurementUnitInput!):          PartMeasurementUnit!
@@ -1995,9 +1855,6 @@ type Mutation {
 	updatePart(id: ID!, input: PartInput!): Part!
 	deletePart(id: ID!): Part!
 
-	createPartAttachment(isImage: Boolean!, file: Upload!): File!
-	updatePartAttachment(id: ID!, isImage: Boolean!, file: Upload!): File!
-	deletePartAttachment(id: ID!): File!
 
 	createPartParameter(input: PartParameterInput!): PartParameter!
 	updatePartParameter(id: ID!, input: PartParameterInput!): PartParameter!
@@ -2013,11 +1870,6 @@ type Mutation {
 	updateStorageLocation(id: ID!, input: StorageLocationInput!): StorageLocation!
 	deleteStorageLocation(id: ID!):                             StorageLocation!
 
-	createStorageLocationImage(file: Upload!): File!
-	updateStorageLocationImage(id: ID!, file: Upload!): File!
-	deleteStorageLocationImage(id: ID!): File!
-
-
 
 	createSiPrefix(input: SiPrefixInput!):          SiPrefix!
 	updateSiPrefix(id: ID!, input: SiPrefixInput!): SiPrefix!
@@ -2026,6 +1878,12 @@ type Mutation {
 	createUnit(input: UnitInput!):          Unit!
 	updateUnit(id: ID!, input: UnitInput!): Unit!
 	deleteUnit(id: ID!):                  Unit!
+
+
+	createFile(input: FileInput!): File!
+	updateFile(id: ID!, input: FileInput!): File!
+	deleteFile(id: ID!): File!
+
 }`, BuiltIn: false},
 	{Name: "api/storageLocation.graphqls", Input: `type StorageLocation implements Node {
 	id:       ID!
@@ -2037,7 +1895,7 @@ type Mutation {
 
 input StorageLocationInput  {
 	name:     String!
-	Image:  Upload
+	Image:  ID
 	category: ID!
 }
 
@@ -2102,27 +1960,18 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
 // region    ***************************** args.gotpl *****************************
 
-func (ec *executionContext) field_Mutation_createFootprintAttachment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_createFile_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 bool
-	if tmp, ok := rawArgs["isImage"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isImage"))
-		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+	var arg0 model.FileInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNFileInput2githubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["isImage"] = arg0
-	var arg1 graphql.Upload
-	if tmp, ok := rawArgs["file"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("file"))
-		arg1, err = ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["file"] = arg1
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -2153,30 +2002,6 @@ func (ec *executionContext) field_Mutation_createFootprint_args(ctx context.Cont
 		}
 	}
 	args["input"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_createPartAttachment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 bool
-	if tmp, ok := rawArgs["isImage"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isImage"))
-		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["isImage"] = arg0
-	var arg1 graphql.Upload
-	if tmp, ok := rawArgs["file"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("file"))
-		arg1, err = ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["file"] = arg1
 	return args, nil
 }
 
@@ -2270,21 +2095,6 @@ func (ec *executionContext) field_Mutation_createStorageLocationCategory_args(ct
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_createStorageLocationImage_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 graphql.Upload
-	if tmp, ok := rawArgs["file"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("file"))
-		arg0, err = ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["file"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_createStorageLocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2315,7 +2125,7 @@ func (ec *executionContext) field_Mutation_createUnit_args(ctx context.Context, 
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_deleteFootprintAttachment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_deleteFile_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 snowflake.ID
@@ -2346,21 +2156,6 @@ func (ec *executionContext) field_Mutation_deleteFootprintCategory_args(ctx cont
 }
 
 func (ec *executionContext) field_Mutation_deleteFootprint_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 snowflake.ID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNID2githubᚗcomᚋbwmarrinᚋsnowflakeᚐID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_deletePartAttachment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 snowflake.ID
@@ -2465,21 +2260,6 @@ func (ec *executionContext) field_Mutation_deleteStorageLocationCategory_args(ct
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_deleteStorageLocationImage_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 snowflake.ID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNID2githubᚗcomᚋbwmarrinᚋsnowflakeᚐID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_deleteStorageLocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2510,7 +2290,7 @@ func (ec *executionContext) field_Mutation_deleteUnit_args(ctx context.Context, 
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_updateFootprintAttachment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_updateFile_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 snowflake.ID
@@ -2522,24 +2302,15 @@ func (ec *executionContext) field_Mutation_updateFootprintAttachment_args(ctx co
 		}
 	}
 	args["id"] = arg0
-	var arg1 bool
-	if tmp, ok := rawArgs["isImage"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isImage"))
-		arg1, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+	var arg1 model.FileInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg1, err = ec.unmarshalNFileInput2githubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["isImage"] = arg1
-	var arg2 graphql.Upload
-	if tmp, ok := rawArgs["file"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("file"))
-		arg2, err = ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["file"] = arg2
+	args["input"] = arg1
 	return args, nil
 }
 
@@ -2588,39 +2359,6 @@ func (ec *executionContext) field_Mutation_updateFootprint_args(ctx context.Cont
 		}
 	}
 	args["input"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_updatePartAttachment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 snowflake.ID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNID2githubᚗcomᚋbwmarrinᚋsnowflakeᚐID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	var arg1 bool
-	if tmp, ok := rawArgs["isImage"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isImage"))
-		arg1, err = ec.unmarshalNBoolean2bool(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["isImage"] = arg1
-	var arg2 graphql.Upload
-	if tmp, ok := rawArgs["file"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("file"))
-		arg2, err = ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["file"] = arg2
 	return args, nil
 }
 
@@ -2768,30 +2506,6 @@ func (ec *executionContext) field_Mutation_updateStorageLocationCategory_args(ct
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_updateStorageLocationImage_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 snowflake.ID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNID2githubᚗcomᚋbwmarrinᚋsnowflakeᚐID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	var arg1 graphql.Upload
-	if tmp, ok := rawArgs["file"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("file"))
-		arg1, err = ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["file"] = arg1
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_updateStorageLocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2855,7 +2569,7 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 	return args, nil
 }
 
-func (ec *executionContext) field_Query_footprintAttachment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Query_file_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 snowflake.ID
@@ -2886,21 +2600,6 @@ func (ec *executionContext) field_Query_footprintCategory_args(ctx context.Conte
 }
 
 func (ec *executionContext) field_Query_footprint_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 snowflake.ID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNID2githubᚗcomᚋbwmarrinᚋsnowflakeᚐID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Query_partAttachment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 snowflake.ID
@@ -3051,21 +2750,6 @@ func (ec *executionContext) field_Query_storageLocationCategories_args(ctx conte
 }
 
 func (ec *executionContext) field_Query_storageLocationCategory_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 snowflake.ID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNID2githubᚗcomᚋbwmarrinᚋsnowflakeᚐID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Query_storageLocationImage_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 snowflake.ID
@@ -3618,7 +3302,7 @@ func (ec *executionContext) _Footprint_attachments(ctx context.Context, field gr
 	}
 	res := resTmp.([]*model.File)
 	fc.Result = res
-	return ec.marshalOFile2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
+	return ec.marshalOFile2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Footprint_image(ctx context.Context, field graphql.CollectedField, obj *model.Footprint) (ret graphql.Marshaler) {
@@ -3816,7 +3500,7 @@ func (ec *executionContext) _FootprintCategory_children(ctx context.Context, fie
 	}
 	res := resTmp.([]*model.FootprintCategory)
 	fc.Result = res
-	return ec.marshalOFootprintCategory2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprintCategory(ctx, field.Selections, res)
+	return ec.marshalOFootprintCategory2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprintCategoryᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _FootprintCategory_footprints(ctx context.Context, field graphql.CollectedField, obj *model.FootprintCategory) (ret graphql.Marshaler) {
@@ -3848,7 +3532,7 @@ func (ec *executionContext) _FootprintCategory_footprints(ctx context.Context, f
 	}
 	res := resTmp.([]*model.Footprint)
 	fc.Result = res
-	return ec.marshalOFootprint2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprint(ctx, field.Selections, res)
+	return ec.marshalOFootprint2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprintᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_createFootprint(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -4101,132 +3785,6 @@ func (ec *executionContext) _Mutation_deleteFootprintCategory(ctx context.Contex
 	res := resTmp.(*model.FootprintCategory)
 	fc.Result = res
 	return ec.marshalNFootprintCategory2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprintCategory(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Mutation_createFootprintAttachment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_createFootprintAttachment_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateFootprintAttachment(rctx, args["isImage"].(bool), args["file"].(graphql.Upload))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Mutation_updateFootprintAttachment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_updateFootprintAttachment_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdateFootprintAttachment(rctx, args["id"].(snowflake.ID), args["isImage"].(bool), args["file"].(graphql.Upload))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Mutation_deleteFootprintAttachment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_deleteFootprintAttachment_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().DeleteFootprintAttachment(rctx, args["id"].(snowflake.ID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_createPartMeasurementUnit(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -4607,132 +4165,6 @@ func (ec *executionContext) _Mutation_deletePart(ctx context.Context, field grap
 	return ec.marshalNPart2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐPart(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Mutation_createPartAttachment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_createPartAttachment_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreatePartAttachment(rctx, args["isImage"].(bool), args["file"].(graphql.Upload))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Mutation_updatePartAttachment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_updatePartAttachment_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdatePartAttachment(rctx, args["id"].(snowflake.ID), args["isImage"].(bool), args["file"].(graphql.Upload))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Mutation_deletePartAttachment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_deletePartAttachment_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().DeletePartAttachment(rctx, args["id"].(snowflake.ID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _Mutation_createPartParameter(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -5111,132 +4543,6 @@ func (ec *executionContext) _Mutation_deleteStorageLocation(ctx context.Context,
 	return ec.marshalNStorageLocation2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐStorageLocation(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Mutation_createStorageLocationImage(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_createStorageLocationImage_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateStorageLocationImage(rctx, args["file"].(graphql.Upload))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Mutation_updateStorageLocationImage(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_updateStorageLocationImage_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdateStorageLocationImage(rctx, args["id"].(snowflake.ID), args["file"].(graphql.Upload))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Mutation_deleteStorageLocationImage(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Mutation_deleteStorageLocationImage_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().DeleteStorageLocationImage(rctx, args["id"].(snowflake.ID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _Mutation_createSiPrefix(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -5487,6 +4793,132 @@ func (ec *executionContext) _Mutation_deleteUnit(ctx context.Context, field grap
 	res := resTmp.(*model.Unit)
 	fc.Result = res
 	return ec.marshalNUnit2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐUnit(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_createFile(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_createFile_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().CreateFile(rctx, args["input"].(model.FileInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.File)
+	fc.Result = res
+	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_updateFile(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_updateFile_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().UpdateFile(rctx, args["id"].(snowflake.ID), args["input"].(model.FileInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.File)
+	fc.Result = res
+	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_deleteFile(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_deleteFile_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().DeleteFile(rctx, args["id"].(snowflake.ID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.File)
+	fc.Result = res
+	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Part_id(ctx context.Context, field graphql.CollectedField, obj *model.Part) (ret graphql.Marshaler) {
@@ -5895,41 +5327,6 @@ func (ec *executionContext) _Part_parameters(ctx context.Context, field graphql.
 	res := resTmp.([]*model.PartParameter)
 	fc.Result = res
 	return ec.marshalOPartParameter2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐPartParameter(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Part_internalPartNumber(ctx context.Context, field graphql.CollectedField, obj *model.Part) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Part",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.InternalPartNumber, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _PartCategory_id(ctx context.Context, field graphql.CollectedField, obj *model.PartCategory) (ret graphql.Marshaler) {
@@ -6709,14 +6106,14 @@ func (ec *executionContext) _PartParameter_valueType(ctx context.Context, field 
 		Object:     "PartParameter",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PartParameter().ValueType(rctx, obj)
+		return obj.ValueType, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6986,80 +6383,6 @@ func (ec *executionContext) _Query_footprintCategory(ctx context.Context, field 
 	return ec.marshalNFootprintCategory2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprintCategory(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Query_footprintAttachments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().FootprintAttachments(rctx)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.([]*model.File)
-	fc.Result = res
-	return ec.marshalOFile2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Query_footprintAttachment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Query_footprintAttachment_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().FootprintAttachment(rctx, args["id"].(snowflake.ID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _Query_parts(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -7294,80 +6617,6 @@ func (ec *executionContext) _Query_partMeasurementUnit(ctx context.Context, fiel
 	res := resTmp.(*model.PartMeasurementUnit)
 	fc.Result = res
 	return ec.marshalNPartMeasurementUnit2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐPartMeasurementUnit(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Query_partAttachments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().PartAttachments(rctx)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.([]*model.File)
-	fc.Result = res
-	return ec.marshalOFile2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Query_partAttachment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Query_partAttachment_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().PartAttachment(rctx, args["id"].(snowflake.ID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_partParameters(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -7606,80 +6855,6 @@ func (ec *executionContext) _Query_storageLocationCategory(ctx context.Context, 
 	return ec.marshalNStorageLocationCategory2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐStorageLocationCategory(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Query_storageLocationImages(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().StorageLocationImages(rctx)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.([]*model.File)
-	fc.Result = res
-	return ec.marshalOFile2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Query_storageLocationImage(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Query_storageLocationImage_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().StorageLocationImage(rctx, args["id"].(snowflake.ID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.File)
-	fc.Result = res
-	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _Query_siPrefixes(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -7840,6 +7015,80 @@ func (ec *executionContext) _Query_unit(ctx context.Context, field graphql.Colle
 	res := resTmp.(*model.Unit)
 	fc.Result = res
 	return ec.marshalNUnit2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐUnit(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_files(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Files(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.File)
+	fc.Result = res
+	return ec.marshalOFile2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_file(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_file_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().File(rctx, args["id"].(snowflake.ID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.File)
+	fc.Result = res
+	return ec.marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFile(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -9749,6 +8998,37 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 
 // region    **************************** input.gotpl *****************************
 
+func (ec *executionContext) unmarshalInputFileInput(ctx context.Context, obj interface{}) (model.FileInput, error) {
+	var it model.FileInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	for k, v := range asMap {
+		switch k {
+		case "content":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
+			it.Content, err = ec.unmarshalOUpload2ᚖgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "description":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			it.Description, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputFootprintCategoryInput(ctx context.Context, obj interface{}) (model.FootprintCategoryInput, error) {
 	var it model.FootprintCategoryInput
 	asMap := map[string]interface{}{}
@@ -9826,6 +9106,14 @@ func (ec *executionContext) unmarshalInputFootprintInput(ctx context.Context, ob
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("category"))
 			it.Category, err = ec.unmarshalOID2ᚖgithubᚗcomᚋbwmarrinᚋsnowflakeᚐID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "attachments":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("attachments"))
+			it.Attachments, err = ec.unmarshalOFileInput2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileInputᚄ(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -9968,14 +9256,6 @@ func (ec *executionContext) unmarshalInputPartInput(ctx context.Context, obj int
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("parameters"))
 			it.Parameters, err = ec.unmarshalOID2ᚕᚖgithubᚗcomᚋbwmarrinᚋsnowflakeᚐID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "internalPartNumber":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("internalPartNumber"))
-			it.InternalPartNumber, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -10320,7 +9600,7 @@ func (ec *executionContext) unmarshalInputStorageLocationInput(ctx context.Conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Image"))
-			it.Image, err = ec.unmarshalOUpload2ᚖgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, v)
+			it.Image, err = ec.unmarshalOID2ᚖgithubᚗcomᚋbwmarrinᚋsnowflakeᚐID(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -10709,21 +9989,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "createFootprintAttachment":
-			out.Values[i] = ec._Mutation_createFootprintAttachment(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "updateFootprintAttachment":
-			out.Values[i] = ec._Mutation_updateFootprintAttachment(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "deleteFootprintAttachment":
-			out.Values[i] = ec._Mutation_deleteFootprintAttachment(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		case "createPartMeasurementUnit":
 			out.Values[i] = ec._Mutation_createPartMeasurementUnit(ctx, field)
 			if out.Values[i] == graphql.Null {
@@ -10766,21 +10031,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			}
 		case "deletePart":
 			out.Values[i] = ec._Mutation_deletePart(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "createPartAttachment":
-			out.Values[i] = ec._Mutation_createPartAttachment(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "updatePartAttachment":
-			out.Values[i] = ec._Mutation_updatePartAttachment(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "deletePartAttachment":
-			out.Values[i] = ec._Mutation_deletePartAttachment(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -10829,21 +10079,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "createStorageLocationImage":
-			out.Values[i] = ec._Mutation_createStorageLocationImage(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "updateStorageLocationImage":
-			out.Values[i] = ec._Mutation_updateStorageLocationImage(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "deleteStorageLocationImage":
-			out.Values[i] = ec._Mutation_deleteStorageLocationImage(ctx, field)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		case "createSiPrefix":
 			out.Values[i] = ec._Mutation_createSiPrefix(ctx, field)
 			if out.Values[i] == graphql.Null {
@@ -10871,6 +10106,21 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			}
 		case "deleteUnit":
 			out.Values[i] = ec._Mutation_deleteUnit(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createFile":
+			out.Values[i] = ec._Mutation_createFile(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "updateFile":
+			out.Values[i] = ec._Mutation_updateFile(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "deleteFile":
+			out.Values[i] = ec._Mutation_deleteFile(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -10998,11 +10248,6 @@ func (ec *executionContext) _Part(ctx context.Context, sel ast.SelectionSet, obj
 				res = ec._Part_parameters(ctx, field, obj)
 				return res
 			})
-		case "internalPartNumber":
-			out.Values[i] = ec._Part_internalPartNumber(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -11191,19 +10436,10 @@ func (ec *executionContext) _PartParameter(ctx context.Context, sel ast.Selectio
 		case "stringValue":
 			out.Values[i] = ec._PartParameter_stringValue(ctx, field, obj)
 		case "valueType":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PartParameter_valueType(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			})
+			out.Values[i] = ec._PartParameter_valueType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "siPrefix":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -11322,31 +10558,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				}
 				return res
 			})
-		case "footprintAttachments":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_footprintAttachments(ctx, field)
-				return res
-			})
-		case "footprintAttachment":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_footprintAttachment(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			})
 		case "parts":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -11417,31 +10628,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_partMeasurementUnit(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			})
-		case "partAttachments":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_partAttachments(ctx, field)
-				return res
-			})
-		case "partAttachment":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_partAttachment(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -11522,31 +10708,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				}
 				return res
 			})
-		case "storageLocationImages":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_storageLocationImages(ctx, field)
-				return res
-			})
-		case "storageLocationImage":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_storageLocationImage(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			})
 		case "siPrefixes":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -11592,6 +10753,31 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_unit(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			})
+		case "files":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_files(ctx, field)
+				return res
+			})
+		case "file":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_file(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -12126,6 +11312,16 @@ func (ec *executionContext) marshalNFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑi
 	return ec._File(ctx, sel, v)
 }
 
+func (ec *executionContext) unmarshalNFileInput2githubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileInput(ctx context.Context, v interface{}) (model.FileInput, error) {
+	res, err := ec.unmarshalInputFileInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNFileInput2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileInput(ctx context.Context, v interface{}) (*model.FileInput, error) {
+	res, err := ec.unmarshalInputFileInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNFloat2float64(ctx context.Context, v interface{}) (float64, error) {
 	res, err := graphql.UnmarshalFloat(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -12418,21 +11614,6 @@ func (ec *executionContext) marshalNUnit2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑi
 func (ec *executionContext) unmarshalNUnitInput2githubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐUnitInput(ctx context.Context, v interface{}) (model.UnitInput, error) {
 	res, err := ec.unmarshalInputUnitInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx context.Context, v interface{}) (graphql.Upload, error) {
-	res, err := graphql.UnmarshalUpload(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx context.Context, sel ast.SelectionSet, v graphql.Upload) graphql.Marshaler {
-	res := graphql.MarshalUpload(v)
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "must not be null")
-		}
-	}
-	return res
 }
 
 func (ec *executionContext) unmarshalNValueType2githubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐValueType(ctx context.Context, v interface{}) (model.ValueType, error) {
@@ -12821,6 +12002,30 @@ func (ec *executionContext) marshalOFile2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑi
 	return ec._File(ctx, sel, v)
 }
 
+func (ec *executionContext) unmarshalOFileInput2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileInputᚄ(ctx context.Context, v interface{}) ([]*model.FileInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		if tmp1, ok := v.([]interface{}); ok {
+			vSlice = tmp1
+		} else {
+			vSlice = []interface{}{v}
+		}
+	}
+	var err error
+	res := make([]*model.FileInput, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNFileInput2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFileInput(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
 func (ec *executionContext) unmarshalOFloat2ᚖfloat64(ctx context.Context, v interface{}) (*float64, error) {
 	if v == nil {
 		return nil, nil
@@ -12834,47 +12039,6 @@ func (ec *executionContext) marshalOFloat2ᚖfloat64(ctx context.Context, sel as
 		return graphql.Null
 	}
 	return graphql.MarshalFloat(*v)
-}
-
-func (ec *executionContext) marshalOFootprint2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprint(ctx context.Context, sel ast.SelectionSet, v []*model.Footprint) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOFootprint2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprint(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	return ret
 }
 
 func (ec *executionContext) marshalOFootprint2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprintᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Footprint) graphql.Marshaler {
@@ -12920,54 +12084,6 @@ func (ec *executionContext) marshalOFootprint2ᚕᚖgithubᚗcomᚋOmegaVoidᚋo
 			return graphql.Null
 		}
 	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalOFootprint2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprint(ctx context.Context, sel ast.SelectionSet, v *model.Footprint) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._Footprint(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOFootprintCategory2ᚕᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprintCategory(ctx context.Context, sel ast.SelectionSet, v []*model.FootprintCategory) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOFootprintCategory2ᚖgithubᚗcomᚋOmegaVoidᚋomegaᚑinventoryᚋpkgᚋmodelᚐFootprintCategory(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
 
 	return ret
 }

@@ -23,25 +23,20 @@ func (r *footprintResolver) Category(ctx context.Context, obj *model.Footprint) 
 }
 
 func (r *footprintResolver) Attachments(ctx context.Context, obj *model.Footprint) ([]*model.File, error) {
-	attachments := make([]*model.File, len(obj.AttachmentsID))
-	for i, id := range obj.AttachmentsID {
-		attachments[i] = &model.File{
-			ID: *id, // TODO add other props
-		}
-	}
-	return attachments, nil
+	return r.Files(ctx, obj.AttachmentsID)
 }
 
 func (r *footprintResolver) Image(ctx context.Context, obj *model.Footprint) (*model.File, error) {
-	return &model.File{
-		ID: *obj.ImageID, // TODO
-	}, nil
+	return r.File(ctx, obj.ImageID)
 }
 
 func (r *footprintCategoryResolver) Parent(ctx context.Context, obj *model.FootprintCategory) (*model.FootprintCategory, error) {
 	var parent model.FootprintCategory
 	// language=SQL
-	err := pgxscan.Get(ctx, r.DbPool, &parent, `select * from omegarogue.public.footprint_category where path = ?`, obj.ParentID)
+	err := pgxscan.Get(
+		ctx, r.DbPool, &parent, `select * from omegarogue.public.footprint_category where id::text = subpath(?, -1, 1)`,
+		obj.Path,
+	)
 	if err != nil {
 		return nil, errs.Wrapf(err, "get parent")
 	}
@@ -51,7 +46,10 @@ func (r *footprintCategoryResolver) Parent(ctx context.Context, obj *model.Footp
 func (r *footprintCategoryResolver) Children(ctx context.Context, obj *model.FootprintCategory) ([]*model.FootprintCategory, error) {
 	var children []*model.FootprintCategory
 	// language=SQL
-	err := pgxscan.Get(ctx, r.DbPool, &children, `select * from omegarogue.public.footprint_category where path ~ '*.' || ? || '.*{1}'`, obj.ID)
+	err := pgxscan.Get(
+		ctx, r.DbPool, &children, `select * from omegarogue.public.footprint_category where path ~ ? || '.*{1}'`,
+		obj.Path,
+	)
 	if err != nil {
 		return nil, errs.Wrapf(err, "get parent")
 	}
